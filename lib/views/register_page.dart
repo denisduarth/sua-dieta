@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/elevated_button_model.dart';
-import 'package:sua_dieta/models/return_button_model.dart';
 import 'package:sua_dieta/models/text_field_model.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 
@@ -61,20 +60,42 @@ class _RegisterPageState extends State<RegisterPage> {
                 Container(
                   height: 405,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       TextFieldModel("Digite seu nome", null,
-                          Icon(Icons.abc_rounded), false),
-                      TextFieldModel("Digite seu e-mail", null,
-                          Icon(Icons.email_rounded), false),
-                      TextFieldModel("Digite sua senha", null,
-                          Icon(Icons.lock_outline_rounded), true),
-                      TextFieldModel("Confirme sua senha", null,
-                          Icon(Icons.lock_outline_rounded), true),
+                          Icon(Icons.abc_rounded), false, TextInputType.text),
+                      TextFieldModel(
+                          "Digite seu e-mail",
+                          null,
+                          Icon(Icons.email_outlined),
+                          false,
+                          TextInputType.emailAddress),
+                      TextFieldModel(
+                          "Digite sua senha",
+                          null,
+                          Icon(Icons.lock_outline_rounded),
+                          true,
+                          TextInputType.text),
+                      TextFieldModel(
+                          "Confirme sua senha",
+                          null,
+                          Icon(Icons.lock_outline_rounded),
+                          true,
+                          TextInputType.text),
                       ElevatedButtonModel(
-                        () => Navigator.of(context).pushNamed("/user_image"),
+                        () =>
+                            Navigator.of(context).pushNamed("/more_about_you"),
                         Icon(Icons.next_plan_rounded),
                         "Continuar",
+                      ),
+                      Container(
+                        child: InkWell(
+                          onTap: Navigator.of(context).pop,
+                          child: Text(
+                            "Já tem uma conta? Faça login agora!",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ),
                       ),
                     ],
                   ),

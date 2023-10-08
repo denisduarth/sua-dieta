@@ -6,8 +6,11 @@ class TextFieldModel extends StatelessWidget {
   String? hintText;
   TextEditingController? textEditingController;
   Icon? icon;
+  bool obscureTextController;
+  TextInputType keyboardType;
 
   TextFieldModel(this.hintText, this.textEditingController, this.icon,
+      this.obscureTextController, this.keyboardType,
       {super.key});
 
   @override
@@ -20,6 +23,7 @@ class TextFieldModel extends StatelessWidget {
       child: Column(
         children: [
           TextField(
+            keyboardType: keyboardType,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
               hintText: hintText,
@@ -33,6 +37,7 @@ class TextFieldModel extends StatelessWidget {
               border: InputBorder.none,
             ),
             controller: textEditingController,
+            obscureText: obscureTextController,
           ),
         ],
       ),

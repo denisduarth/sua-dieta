@@ -56,10 +56,18 @@ class LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  TextFieldModel("Digite seu login", null,
-                      const Icon(Icons.login_rounded), false),
-                  TextFieldModel("Digite sua senha", null,
-                      const Icon(Icons.lock_outline_rounded), true),
+                  TextFieldModel(
+                      "Digite seu login",
+                      null,
+                      const Icon(Icons.login_rounded),
+                      false,
+                      TextInputType.text),
+                  TextFieldModel(
+                      "Digite sua senha",
+                      null,
+                      const Icon(Icons.lock_outline_rounded),
+                      true,
+                      TextInputType.text),
                   ElevatedButtonModel(
                     () => print('Eae'),
                     const Icon(
