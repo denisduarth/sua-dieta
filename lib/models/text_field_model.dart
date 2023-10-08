@@ -20,11 +20,16 @@ class TextFieldModel extends StatelessWidget {
       child: Column(
         children: [
           TextField(
+            textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: TextStyle(
+                  color: Colors.grey[300],
+                  fontFamily: "Poppins",
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600),
               prefixIcon: icon,
-              prefixIconColor: Colors.grey,
+              prefixIconColor: Colors.grey[300],
               border: InputBorder.none,
             ),
             controller: textEditingController,

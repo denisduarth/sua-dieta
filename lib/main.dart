@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/views/register_page.dart';
+import 'package:sua_dieta/views/user_image_page.dart';
 import 'views/login_page.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class SuaDieta extends StatelessWidget {
       routes: {
         "/login": (context) => LoginPage(),
         "/register": (context) => RegisterPage(),
+        "/user_image": (context) => UserImagePage()
       },
       initialRoute: "/login",
     );
