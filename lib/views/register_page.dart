@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/elevated_button_model.dart';
 import 'package:sua_dieta/models/text_field_model.dart';
+import 'package:sua_dieta/models/top_background_image_model.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -20,81 +21,93 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            padding: const EdgeInsets.only(left: 26, right: 26),
-            height: 465,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Expanded(
+            child: ListView(
+              scrollDirection: Axis.vertical,
               children: [
+                TopBackgroundImageModel(),
                 Container(
-                  width: 192,
-                  height: 37,
-                  child: Row(
+                  padding: const EdgeInsets.only(left: 26, right: 26),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
+                        margin: EdgeInsets.symmetric(vertical: 30),
+                        width: 192,
+                        height: 37,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Criar",
-                              style: labelTextStyle["black"],
+                            Container(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Criar",
+                                    style: labelTextStyle["black"],
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Conta",
+                                    style: labelTextStyle["white"],
+                                  ),
+                                ],
+                              ),
                             ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Conta",
-                              style: labelTextStyle["white"],
+                            Image.asset(
+                              "images/user_icon.png",
+                              width: 35,
+                              height: 35,
                             ),
                           ],
                         ),
                       ),
-                      Image.asset(
-                        "images/user_icon.png",
-                        width: 35,
-                        height: 35,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 405,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextFieldModel("Digite seu nome", null,
-                          Icon(Icons.abc_rounded), false, TextInputType.text),
-                      TextFieldModel(
-                          "Digite seu e-mail",
-                          null,
-                          Icon(Icons.email_outlined),
-                          false,
-                          TextInputType.emailAddress),
-                      TextFieldModel(
-                          "Digite sua senha",
-                          null,
-                          Icon(Icons.lock_outline_rounded),
-                          true,
-                          TextInputType.text),
-                      TextFieldModel(
-                          "Confirme sua senha",
-                          null,
-                          Icon(Icons.lock_outline_rounded),
-                          true,
-                          TextInputType.text),
-                      ElevatedButtonModel(
-                        () =>
-                            Navigator.of(context).pushNamed("/more_about_you"),
-                        Icon(Icons.next_plan_rounded),
-                        "Continuar",
-                      ),
                       Container(
-                        child: InkWell(
-                          onTap: Navigator.of(context).pop,
-                          child: Text(
-                            "Já tem uma conta? Faça login agora!",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
+                        height: 450,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextFieldModel(
+                                "Digite seu nome",
+                                null,
+                                Icon(Icons.abc_rounded),
+                                false,
+                                TextInputType.text),
+                            TextFieldModel(
+                                "Digite seu e-mail",
+                                null,
+                                Icon(Icons.email_outlined),
+                                false,
+                                TextInputType.emailAddress),
+                            TextFieldModel(
+                                "Digite sua senha",
+                                null,
+                                Icon(Icons.lock_outline_rounded),
+                                true,
+                                TextInputType.text),
+                            TextFieldModel(
+                                "Confirme sua senha",
+                                null,
+                                Icon(Icons.lock_outline_rounded),
+                                true,
+                                TextInputType.text),
+                            ElevatedButtonModel(
+                              () => Navigator.of(context)
+                                  .pushNamed("/more_about_you"),
+                              Icon(Icons.next_plan_rounded),
+                              "Continuar",
+                            ),
+                            Container(
+                              child: InkWell(
+                                onTap: Navigator.of(context).pop,
+                                child: Text(
+                                  "Já tem uma conta? Faça login agora!",
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
