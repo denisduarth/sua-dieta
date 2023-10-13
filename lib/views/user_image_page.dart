@@ -1,9 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:sua_dieta/models/elevated_button_model.dart';
-import 'package:sua_dieta/models/rounded_image_model.dart';
-import 'package:sua_dieta/models/top_background_image_model.dart';
+import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 
