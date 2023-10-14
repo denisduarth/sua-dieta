@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 TopBackgroundImageModel(),
                 TextFieldModel(
-                    "Pesquisar",
+                    "Pesquisar dieta",
                     null,
                     const Icon(Icons.search_rounded),
                     false,
@@ -37,14 +37,14 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           Text(
-                            "Criar",
+                            "Bem-vindo",
                             style: labelTextStyle["black"],
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "Conta",
+                            "Usuário",
                             style: labelTextStyle["white"],
                           ),
                           Image.asset(
