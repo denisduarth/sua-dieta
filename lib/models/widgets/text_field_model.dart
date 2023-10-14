@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:sua_dieta/styles/components/colors.dart';
 
 class TextFieldModel extends StatelessWidget {
   String? hintText;
@@ -23,6 +24,9 @@ class TextFieldModel extends StatelessWidget {
       child: Column(
         children: [
           TextField(
+            cursorWidth: 3.0,
+            cursorColor: backgroundColor,
+            cursorRadius: Radius.circular(8),
             keyboardType: keyboardType,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(

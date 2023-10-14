@@ -27,12 +27,11 @@ class LoginPageState extends State<LoginPage> {
                 TopBackgroundImageModel(),
                 Container(
                   height: 500,
-                  padding: const EdgeInsets.only(left: 26, right: 26),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
-                        margin: EdgeInsets.symmetric(vertical: 30),
                         height: 74,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,11 +71,11 @@ class LoginPageState extends State<LoginPage> {
                           true,
                           TextInputType.text),
                       ElevatedButtonModel(
-                        () => print('Eae'),
-                        const Icon(
+                        () => Navigator.of(context).pushNamed("/home"),
+                        buttonIcon: const Icon(
                           Icons.login_rounded,
                         ),
-                        "Entrar",
+                        buttonText: "Entrar",
                       ),
                       const Text(
                         "ou",
@@ -85,8 +84,8 @@ class LoginPageState extends State<LoginPage> {
                       ),
                       ElevatedButtonModel(
                         () => Navigator.of(context).pushNamed("/register"),
-                        const Icon(Icons.person_add),
-                        "Criar conta",
+                        buttonIcon: const Icon(Icons.person_add),
+                        buttonText: "Criar conta",
                       ),
                     ],
                   ),

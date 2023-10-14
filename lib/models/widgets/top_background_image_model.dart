@@ -9,18 +9,18 @@ class TopBackgroundImageModel extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(200),
-        bottomRight: Radius.circular(200),
+        bottomLeft: Radius.circular(1000),
+        bottomRight: Radius.circular(1000),
       ),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(200),
+          borderRadius: BorderRadius.circular(1000),
         ),
         child: Image.asset(
           "images/top_background_image.png",
-          height: 150,
-          fit: BoxFit.cover,
+          height: 200,
+          fit: BoxFit.fill,
         ),
       ),
     );

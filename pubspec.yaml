@@ -40,6 +40,7 @@ flutter:
     - fonts/
     - images/
     - lib/models/
+    - lib/views/
 
   fonts:
     - family: Poppins

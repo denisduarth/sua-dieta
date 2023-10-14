@@ -26,7 +26,7 @@ class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
                 TopBackgroundImageModel(),
                 Container(
                   height: 500,
-                  padding: EdgeInsets.only(right: 26, left: 26),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -106,8 +106,8 @@ class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
                       ),
                       ElevatedButtonModel(
                         () => Navigator.of(context).pushNamed("/user_image"),
-                        Icon(Icons.next_plan_rounded),
-                        "Continuar",
+                        buttonIcon: Icon(Icons.next_plan_rounded),
+                        buttonText: "Continuar",
                       ),
                     ],
                   ),

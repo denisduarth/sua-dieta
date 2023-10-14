@@ -17,15 +17,14 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(200, 225, 190, 1),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: ListView(
-              scrollDirection: Axis.vertical,
               children: [
                 TopBackgroundImageModel(),
                 Container(
-                  padding: const EdgeInsets.only(left: 26, right: 26),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -93,8 +92,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             ElevatedButtonModel(
                               () => Navigator.of(context)
                                   .pushNamed("/more_about_you"),
-                              Icon(Icons.next_plan_rounded),
-                              "Continuar",
+                              buttonIcon: Icon(Icons.navigate_next_rounded),
+                              buttonText: "Continuar",
                             ),
                             Container(
                               child: InkWell(

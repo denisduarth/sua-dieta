@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:sua_dieta/views/more_about_you_page.dart';
-import 'package:sua_dieta/views/register_page.dart';
-import 'package:sua_dieta/views/user_image_page.dart';
-import 'views/login_page.dart';
+import 'package:sua_dieta/views/all.dart';
+import 'package:sua_dieta/views/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +19,8 @@ class SuaDieta extends StatelessWidget {
         "/login": (context) => LoginPage(),
         "/register": (context) => RegisterPage(),
         "/more_about_you": (context) => MoreAboutYouPage(),
-        "/user_image": (context) => UserImagePage()
+        "/user_image": (context) => UserImagePage(),
+        "/home": (context) => HomePage()
       },
       initialRoute: "/login",
     );

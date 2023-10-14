@@ -1,18 +1,18 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 
-class UserImagePage extends StatefulWidget {
-  const UserImagePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<UserImagePage> createState() => _UserImagePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _UserImagePageState extends State<UserImagePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,39 +24,39 @@ class _UserImagePageState extends State<UserImagePage> {
             child: ListView(
               children: [
                 TopBackgroundImageModel(),
+                TextFieldModel(
+                    "Pesquisar",
+                    null,
+                    const Icon(Icons.search_rounded),
+                    false,
+                    TextInputType.text),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  margin: const EdgeInsets.symmetric(vertical: 15),
-                  height: 500,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Row(
                         children: [
                           Text(
-                            "Selecione uma ",
+                            "Criar",
                             style: labelTextStyle["black"],
                           ),
+                          SizedBox(
+                            width: 5,
+                          ),
                           Text(
-                            "Foto",
+                            "Conta",
                             style: labelTextStyle["white"],
                           ),
                           Image.asset(
-                            "images/user_icon.png",
+                            "images/rodrigo_goes.jpg",
                             width: 35,
                             height: 35,
-                          ),
+                          )
                         ],
-                      ),
-                      RoundedImageModel("images/rodrigo_goes.jpg", 200, 200),
-                      ElevatedButtonModel(
-                        () => Navigator.of(context).pushNamed("/login"),
-                        buttonIcon: const Icon(Icons.verified_rounded),
-                        buttonText: "Finalizar",
-                      ),
+                      )
                     ],
                   ),
-                ),
+                )
               ],
             ),
           ),
