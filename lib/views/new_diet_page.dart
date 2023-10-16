@@ -5,14 +5,14 @@ import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 
-class NewRecipePage extends StatefulWidget {
-  const NewRecipePage({super.key});
+class NewDietPage extends StatefulWidget {
+  const NewDietPage({super.key});
 
   @override
-  State<NewRecipePage> createState() => _NewRecipePageState();
+  State<NewDietPage> createState() => _NewDietPageState();
 }
 
-class _NewRecipePageState extends State<NewRecipePage> {
+class _NewDietPageState extends State<NewDietPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

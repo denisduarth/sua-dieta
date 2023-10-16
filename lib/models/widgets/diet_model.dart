@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 
-class RecipeModel extends StatelessWidget {
-  final String recipeModelImage, recipeModelText, recipeModelDate;
+class DietModel extends StatelessWidget {
+  final String dietModelImage, dietModelText, dietModelDate;
   final Function()? onTap;
 
-  const RecipeModel(this.recipeModelImage, this.recipeModelText,
-      this.recipeModelDate, this.onTap,
+  const DietModel(
+      this.dietModelImage, this.dietModelText, this.dietModelDate, this.onTap,
       {super.key});
 
   get animationController => null;
@@ -24,7 +24,7 @@ class RecipeModel extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(7),
           ),
           boxShadow: [
             BoxShadow(
@@ -37,9 +37,9 @@ class RecipeModel extends StatelessWidget {
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: BorderRadius.all(Radius.circular(7)),
               child: Image.asset(
-                recipeModelImage,
+                dietModelImage,
                 width: 120,
                 height: 85,
                 fit: BoxFit.cover,
@@ -53,14 +53,14 @@ class RecipeModel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  recipeModelText,
+                  dietModelText,
                   style: TextStyle(
                       fontFamily: "Poppins",
                       fontWeight: FontWeight.w700,
                       fontSize: 15),
                 ),
                 Text(
-                  recipeModelDate,
+                  dietModelDate,
                   style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 10,

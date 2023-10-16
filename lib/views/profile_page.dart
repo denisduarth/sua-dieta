@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors
+// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
@@ -100,6 +100,79 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.of(context).pushNamed("/edit_account"),
                           buttonIcon: const Icon(Icons.edit_rounded),
                           buttonText: "Editar perfil",
+                        ),
+                        Container(
+                          height: 950,
+                          padding: EdgeInsets.symmetric(vertical: 30),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Suas",
+                                    style: labelTextStyle["black"],
+                                  ),
+                                  Text(
+                                    " Dietas ",
+                                    style: labelTextStyle["white"],
+                                  ),
+                                  Image.asset("images/vegetables_icon_2.png",
+                                      width: 50, height: 50),
+                                ],
+                              ),
+                              ElevatedButtonModel(
+                                buttonIcon: Icon(Icons.add),
+                                buttonText: "Nova Dieta",
+                                () => Navigator.of(context)
+                                    .pushNamed("/new_diet"),
+                              ),
+                              Container(
+                                // height: 800,
+                                child: Column(
+                                  children: [
+                                    DietModel(
+                                        "images/vegetarian_diet_image.jpg",
+                                        "Vegetariana",
+                                        "15/09/2023",
+                                        () {}),
+                                    DietModel(
+                                        "images/vegetarian_diet_image.jpg",
+                                        "Vegetariana2",
+                                        "15/09/2023",
+                                        () {}),
+                                    DietModel(
+                                        "images/vegetarian_diet_image.jpg",
+                                        "Vegetariana3",
+                                        "15/09/2023",
+                                        () {}),
+                                    DietModel(
+                                        "images/vegetarian_diet_image.jpg",
+                                        "Vegetariana4",
+                                        "15/09/2023",
+                                        () {}),
+                                    DietModel(
+                                        "images/vegetarian_diet_image.jpg",
+                                        "Vegetariana5",
+                                        "15/09/2023",
+                                        () {}),
+                                    DietModel(
+                                        "images/vegetarian_diet_image.jpg",
+                                        "Vegetariana6",
+                                        "15/09/2023",
+                                        () {}),
+                                    DietModel(
+                                        "images/vegetarian_diet_image.jpg",
+                                        "Vegetariana7",
+                                        "15/09/2023",
+                                        () {}),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

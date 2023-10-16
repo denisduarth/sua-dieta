@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
-import 'package:sua_dieta/models/widgets/recipe_model.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 
@@ -103,20 +102,17 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  RecipeModel(
-                                      "images/vegetarian_diet_image.jpg",
-                                      "Vegetariana",
-                                      "10/10/2023",
-                                      () {}),
-                                  RecipeModel("images/low_carb_diet.jpg",
+                                  DietModel("images/vegetarian_diet_image.jpg",
+                                      "Vegetariana", "10/10/2023", () {}),
+                                  DietModel("images/low_carb_diet.jpg",
                                       "Low Carb", "11/10/2023", () {}),
-                                  RecipeModel("images/low_carb_diet.jpg",
+                                  DietModel("images/low_carb_diet.jpg",
                                       "Low Carb 2", "11/10/2023", () {}),
-                                  RecipeModel("images/low_carb_diet.jpg",
+                                  DietModel("images/low_carb_diet.jpg",
                                       "Low Carb 3", "11/10/2023", () {}),
-                                  RecipeModel("images/low_carb_diet.jpg",
+                                  DietModel("images/low_carb_diet.jpg",
                                       "Low Carb 4", "11/10/2023", () {}),
-                                  RecipeModel("images/low_carb_diet.jpg",
+                                  DietModel("images/low_carb_diet.jpg",
                                       "Low Carb 5", "11/10/2023", () {}),
                                 ],
                               ),

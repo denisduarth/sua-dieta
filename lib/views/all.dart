@@ -7,3 +7,4 @@ export 'package:sua_dieta/views/login_page.dart';
 export 'package:sua_dieta/views/home_page.dart';
 export 'package:sua_dieta/views/profile_page.dart';
 export 'package:sua_dieta/views/edit_account_page.dart';
+export 'package:sua_dieta/views/new_diet_page.dart';

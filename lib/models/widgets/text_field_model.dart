@@ -19,7 +19,7 @@ class TextFieldModel extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(11)),
+        borderRadius: BorderRadius.all(Radius.circular(7)),
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
@@ -33,7 +33,7 @@ class TextFieldModel extends StatelessWidget {
           TextField(
             cursorWidth: 3.0,
             cursorColor: backgroundColor,
-            cursorRadius: Radius.circular(11),
+            cursorRadius: Radius.circular(7),
             keyboardType: keyboardType,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
