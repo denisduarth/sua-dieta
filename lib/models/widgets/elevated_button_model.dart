@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, sized_box_for_whitespace, avoid_unnecessary_containers
+// ignore_for_file: must_be_immutable, sized_box_for_whitespace, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
@@ -18,10 +18,16 @@ class ElevatedButtonModel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-            backgroundColor: backgroundColor, shadowColor: Colors.transparent),
+          backgroundColor: backgroundColor,
+          shadowColor: Colors.transparent,
+          padding: EdgeInsets.symmetric(
+            vertical: 10,
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

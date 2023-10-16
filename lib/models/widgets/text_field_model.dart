@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
@@ -19,25 +19,33 @@ class TextFieldModel extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: BorderRadius.all(Radius.circular(11)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0, 0),
+            blurRadius: 10,
+          ),
+        ],
       ),
       child: Column(
         children: [
           TextField(
             cursorWidth: 3.0,
             cursorColor: backgroundColor,
-            cursorRadius: Radius.circular(8),
+            cursorRadius: Radius.circular(11),
             keyboardType: keyboardType,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(horizontal: 20),
               hintText: hintText,
               hintStyle: TextStyle(
                   color: Colors.grey[300],
                   fontFamily: "Poppins",
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600),
-              prefixIcon: icon,
-              prefixIconColor: Colors.grey[300],
+              suffixIcon: icon,
+              suffixIconColor: Colors.grey[300],
               border: InputBorder.none,
             ),
             controller: textEditingController,

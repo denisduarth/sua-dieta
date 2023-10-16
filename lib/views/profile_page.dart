@@ -17,74 +17,98 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: ListView(
-              children: [
-                TopBackgroundImageModel(),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  margin: const EdgeInsets.symmetric(vertical: 15),
-                  height: 500,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: WillPopScope(
+        onWillPop: () async {
+          // Remove a rota da edição de perfil da pilha do navegador.
+          Navigator.popUntil(context, ModalRoute.withName('/home'));
+
+          // Retorna true para permitir que o usuário volte para a tela inicial.
+          return true;
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  Stack(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Sua",
-                            style: labelTextStyle["black"],
-                          ),
-                          Text(
-                            "conta",
-                            style: labelTextStyle["white"],
-                          ),
-                          Image.asset(
-                            "images/user_icon.png",
-                            width: 35,
-                            height: 35,
-                          ),
-                        ],
-                      ),
+                      TopBackgroundImageModel(),
                       Container(
-                          child: Column(
-                        children: [
-                              Text(
-                                "Usuário",
-                                style: labelTextStyle["black"],
-                              ),
-                              Text("usuario@gmail.com",
-                                style: labelTextStyle["black"],
-                              ),
-                              Text(
-                                "1,80",
-                                style: labelTextStyle["black"],
-                              ),
-                              Text(
-                                "90 KG",
-                                style: labelTextStyle["black"],
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                            ],
-                          ),
-                      ),
-                      RoundedImageModel("images/rodrigo_goes.jpg", 150, 150),
-                      ElevatedButtonModel(
-                        () => Navigator.of(context).pushNamed("/login"),
-                        buttonIcon: const Icon(Icons.verified_rounded),
-                        buttonText: "Editar perfil",
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 120),
+                        child: RoundedImageModel(
+                          "images/rodrigo_goes.jpg",
+                          150,
+                          150,
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    margin: const EdgeInsets.only(bottom: 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 350,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Seu",
+                                    style: labelTextStyle["black"],
+                                  ),
+                                  Text(
+                                    " Perfil ",
+                                    style: labelTextStyle["white"],
+                                  ),
+                                  Image.asset("images/user_icon.png",
+                                      width: 35, height: 35),
+                                ],
+                              ),
+                              TextFieldModel(
+                                  "Nome",
+                                  TextEditingController(
+                                      text: "Nome do usuário"),
+                                  Icon(Icons.abc_rounded),
+                                  false,
+                                  TextInputType.text),
+                              TextFieldModel(
+                                  "E-mail",
+                                  TextEditingController(
+                                      text: "usuario@usuario.com"),
+                                  Icon(Icons.email_rounded),
+                                  false,
+                                  TextInputType.text),
+                              TextFieldModel(
+                                  "Senha",
+                                  TextEditingController(
+                                      text: "dasiofjoisdjfioadjsiofsaj"),
+                                  Icon(Icons.lock_rounded),
+                                  true,
+                                  TextInputType.text),
+                            ],
+                          ),
+                        ),
+                        ElevatedButtonModel(
+                          () =>
+                              Navigator.of(context).pushNamed("/edit_account"),
+                          buttonIcon: const Icon(Icons.edit_rounded),
+                          buttonText: "Editar perfil",
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

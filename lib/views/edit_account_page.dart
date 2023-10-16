@@ -17,46 +17,48 @@ class _EditAccountPageState extends State<EditAccountPage> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(200, 225, 190, 1),
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: ListView(
               children: [
-                TopBackgroundImageModel(),
+                Stack(
+                  children: [
+                    TopBackgroundImageModel(),
+                    Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 120),
+                      child: RoundedImageModel(
+                        "images/rodrigo_goes.jpg",
+                        150,
+                        150,
+                      ),
+                    ),
+                  ],
+                ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
+                  margin: EdgeInsets.symmetric(vertical: 30),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        margin: EdgeInsets.symmetric(vertical: 30),
-                        width: 192,
-                        height: 37,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Edite sua",
-                                    style: labelTextStyle["black"],
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Conta",
-                                    style: labelTextStyle["white"],
-                                  ),
-                                ],
-                              ),
+                            Text(
+                              "Edite sua",
+                              style: labelTextStyle["black"],
+                            ),
+                            Text(
+                              " Conta ",
+                              style: labelTextStyle["white"],
                             ),
                             Image.asset(
-                              "images/rodrigo_goes.jpg",
-                              width: 80,
-                              height: 80,
-                            ),
+                              "images/pencil.png",
+                              width: 35,
+                              height: 35,
+                            )
                           ],
                         ),
                       ),
@@ -66,32 +68,39 @@ class _EditAccountPageState extends State<EditAccountPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             TextFieldModel(
-                                "Usuário",
-                                null,
+                                "Digite o novo nome do Usuário",
+                                TextEditingController(
+                                  text: "Novo nome",
+                                ),
                                 Icon(Icons.abc_rounded),
                                 false,
                                 TextInputType.text),
                             TextFieldModel(
-                                "usuario@gmail.com",
-                                null,
-                                Icon(Icons.email_outlined),
+                                "Digite o novo e-mail",
+                                TextEditingController(
+                                  text: "novo_email@usuário.com",
+                                ),
+                                Icon(Icons.email_rounded),
                                 false,
                                 TextInputType.emailAddress),
                             TextFieldModel(
-                                "********",
-                                null,
+                                "Digite a nova senha",
+                                TextEditingController(
+                                  text: "dkpasokdopdskopfoasdkfopads",
+                                ),
                                 Icon(Icons.lock_outline_rounded),
                                 true,
                                 TextInputType.text),
                             TextFieldModel(
-                                "********",
-                                null,
+                                "Repita a Nova Senha",
+                                TextEditingController(
+                                  text: "dkpasokdopdskopfoasdkfopads",
+                                ),
                                 Icon(Icons.lock_outline_rounded),
                                 true,
                                 TextInputType.text),
                             ElevatedButtonModel(
-                              () => Navigator.of(context)
-                                  .pushNamed("/more_about_you"),
+                              () => Navigator.of(context).pushNamed("/profile"),
                               buttonIcon: Icon(Icons.save),
                               buttonText: "Salvar",
                             ),
