@@ -13,7 +13,7 @@ class DoNotContainModel extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
-        color: Colors.redAccent,
+        color: hyperTextColor,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(

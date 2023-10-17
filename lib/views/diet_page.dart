@@ -42,19 +42,36 @@ class _DietPageState extends State<DietPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          RoundedImageModel("images/low_carb_diet.jpg", 75, 75),
                           Text(
-                            "  Low Carb",
+                            "Low ",
                             style: labelTextStyle["black"],
+                          ),
+                          Text(
+                            "Carb",
+                            style: labelTextStyle["white"],
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          for (var item in naoContem) ...{
-                            DoNotContainModel(item)
-                          },
+                          Text(
+                            "Não contém: ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontFamily: "Poppins"),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              for (var item in naoContem) ...{
+                                DoNotContainModel(item)
+                              },
+                            ],
+                          )
                         ],
                       ),
                       Container(

@@ -42,7 +42,7 @@ class TextFieldModel extends StatelessWidget {
               hintStyle: TextStyle(
                   color: Colors.grey[300],
                   fontFamily: "Poppins",
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600),
               suffixIcon: icon,
               suffixIconColor: Colors.grey[300],
