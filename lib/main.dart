@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/views/all.dart';
+import 'package:sua_dieta/views/diet_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +23,8 @@ class SuaDieta extends StatelessWidget {
         "/home": (context) => HomePage(),
         "/profile": (context) => ProfilePage(),
         "/edit_account": (context) => EditAccountPage(),
-        "/new_diet": (context) => NewDietPage()
+        "/new_diet": (context) => NewDietPage(),
+        "/diet": (context) => DietPage()
       },
       initialRoute: "/login",
     );
