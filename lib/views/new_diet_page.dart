@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
@@ -18,6 +18,7 @@ class _NewDietPageState extends State<NewDietPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: ListView(
@@ -61,14 +62,25 @@ class _NewDietPageState extends State<NewDietPage> {
                         TextInputType.text,
                       ),
                       Container(
-                          child: Column(
-                        children: [
-                          Text(
-                            "Filtros",
-                            style: labelTextStyle["dark green"],
-                          )
-                        ],
-                      ))
+                        child: Column(
+                          children: [
+                            Text(
+                              "Filtros", 
+                              style: labelTextStyle["dark green"],
+                            ),
+                            Container(
+                              child: GridView.count(
+                                crossAxisCount: 2,
+                                children: [
+                                  ListTile(
+                                    title: Text("Sem glúten"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
