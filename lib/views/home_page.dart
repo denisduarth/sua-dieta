@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
@@ -27,16 +28,23 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     TopBackgroundImageModel(),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      margin: EdgeInsets.symmetric(vertical: 30),
-                      child: TextFieldModel(
-                        "Pesquisar dieta",
-                        null,
-                        const Icon(Icons.search_rounded),
-                        false,
-                        TextInputType.text,
-                      ),
-                    ),
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        margin: EdgeInsets.symmetric(vertical: 30),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () => FirebaseAuth.instance.signOut(),
+                              child: Icon(Icons.logout_rounded),
+                            ),
+                            TextFieldModel(
+                              "Pesquisar dieta",
+                              null,
+                              const Icon(Icons.search_rounded),
+                              false,
+                              TextInputType.text,
+                            ),
+                          ],
+                        )),
                   ],
                 ),
                 Container(

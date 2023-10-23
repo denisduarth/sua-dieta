@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/views/all.dart';
+import 'package:sua_dieta/views/auth_page.dart';
 
 const firebaseConfig = FirebaseOptions(
   apiKey: "AIzaSyAVd2cgZNc6BHv9d3jfzcFT9w9ugbCCCzo",
@@ -26,6 +27,7 @@ class SuaDieta extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
+        "/auth" :(context) => AuthPage(),
         "/login": (context) => LoginPage(),
         "/register": (context) => RegisterPage(),
         "/more_about_you": (context) => MoreAboutYouPage(),
@@ -35,7 +37,8 @@ class SuaDieta extends StatelessWidget {
         "/edit_account": (context) => EditAccountPage(),
         "/new_diet": (context) => NewDietPage()
       },
-      initialRoute: "/login",
+      initialRoute: "/auth",
+      debugShowCheckedModeBanner: false,
     );
   }
 }
