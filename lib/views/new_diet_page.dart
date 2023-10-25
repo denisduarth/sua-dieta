@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
@@ -27,6 +27,7 @@ class _NewDietPageState extends State<NewDietPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: ListView(
@@ -73,45 +74,14 @@ class _NewDietPageState extends State<NewDietPage> {
                         TextInputType.text,
                       ),
                       Container(
-                        child: Column(
-                          children: [
-                            Text(
-                              "Filtros",
-                              style: labelTextStyle["dark_green"],
-                            ),
-                            // GridView(
-                            //   gridDelegate:
-                            //       SliverGridDelegateWithFixedCrossAxisCount(
-                            //           crossAxisCount: 2),
-                            //   children: [
-                            //     for (var item in filtros) ...{
-                            //       RadioListTile(
-                            //           value: item,
-                            //           groupValue: filtros,
-                            //           onChanged: (var value) {
-                            //             setState(() {
-                            //               item = value as String?;
-                            //             });
-                            //           })
-                            //     }
-                            //   ],
-                            // )
-                            Text("TODO")
-                          ],
-                        ),
-                      ),
-                      TextFieldModel(
-                        "Não contém",
-                        null,
-                        Icon(Icons.no_food_rounded),
-                        false,
-                        TextInputType.text,
-                      ),
-                      ElevatedButtonModel(
-                        () => Navigator.of(context).pushNamed("/profile"),
-                        buttonIcon: Icon(Icons.verified_rounded),
-                        buttonText: "Gerar Dieta",
-                      )
+                          child: Column(
+                        children: [
+                          Text(
+                            "Filtros",
+                            style: labelTextStyle["dark green"],
+                          )
+                        ],
+                      ))
                     ],
                   ),
                 ),

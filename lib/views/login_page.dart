@@ -1,4 +1,5 @@
 // ignore_for_file: sized_box_for_whitespace, avoid_print, prefer_const_constructors, unused_import
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
@@ -14,6 +15,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,19 +70,19 @@ class LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       TextFieldModel(
-                          "Digite seu login",
-                          null,
+                          "Digite seu e-mail",
+                          emailController,
                           const Icon(Icons.login_rounded),
                           false,
                           TextInputType.text),
                       TextFieldModel(
                           "Digite sua senha",
-                          null,
+                          passwordController,
                           const Icon(Icons.lock_outline_rounded),
                           true,
                           TextInputType.text),
                       ElevatedButtonModel(
-                        () => Navigator.of(context).pushNamed("/home"),
+                        () => signIn(),
                         buttonIcon: const Icon(
                           Icons.login_rounded,
                         ),
