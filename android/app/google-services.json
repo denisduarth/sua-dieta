@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "539077520468",
+    "project_id": "sua-dieta-ba80d",
+    "storage_bucket": "sua-dieta-ba80d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539077520468:android:4acd9239a8a1376664d1c1",
+        "android_client_info": {
+          "package_name": "com.example.sua_dieta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZhtULspAgFcwG3fil3SoBsjDwfhsj9W0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
