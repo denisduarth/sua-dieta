@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors_in_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:sua_dieta/styles/components/colors.dart';
 
 class TopBackgroundImageModel extends StatelessWidget {
   TopBackgroundImageModel({super.key});
@@ -9,17 +10,16 @@ class TopBackgroundImageModel extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(200),
-        bottomRight: Radius.circular(200),
+        bottomLeft: Radius.circular(150),
+        bottomRight: Radius.circular(150),
       ),
       child: Container(
-        width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(200),
+          borderRadius: BorderRadius.circular(150),
         ),
         child: Image.asset(
           "images/top_background_image.png",
-          height: 200,
+          height: 150,
           fit: BoxFit.fill,
         ),
       ),

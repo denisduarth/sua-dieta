@@ -1,16 +1,22 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:sua_dieta/styles/components/colors.dart';
+
+final labelStyle = TextStyle(
+  color: Colors.grey[300],
+  fontFamily: "Poppins",
+  fontSize: 13,
+  fontWeight: FontWeight.w600,
+);
 
 class TextFieldModel extends StatelessWidget {
-  String? hintText;
+  String? labelText;
   TextEditingController? textEditingController;
   Icon? icon;
   bool obscureTextController;
   TextInputType keyboardType;
 
-  TextFieldModel(this.hintText, this.textEditingController, this.icon,
+  TextFieldModel(this.labelText, this.textEditingController, this.icon,
       this.obscureTextController, this.keyboardType,
       {super.key});
 
@@ -19,7 +25,7 @@ class TextFieldModel extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(7)),
+        borderRadius: BorderRadius.all(Radius.circular(6)),
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
@@ -31,21 +37,15 @@ class TextFieldModel extends StatelessWidget {
       child: Column(
         children: [
           TextField(
-            cursorWidth: 3.0,
-            cursorColor: backgroundColor,
-            cursorRadius: Radius.circular(7),
+            cursorRadius: Radius.circular(6),
             keyboardType: keyboardType,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 20),
-              hintText: hintText,
-              hintStyle: TextStyle(
-                  color: Colors.grey[300],
-                  fontFamily: "Poppins",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
-              suffixIcon: icon,
-              suffixIconColor: Colors.grey[300],
+              // contentPadding: EdgeInsets.symmetric(horizontal: 20),
+              labelText: labelText,
+              labelStyle: labelStyle,
+              prefixIcon: icon,
+              prefixIconColor: Colors.grey[300],
               border: InputBorder.none,
             ),
             controller: textEditingController,

@@ -5,7 +5,7 @@ import 'package:sua_dieta/views/all.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: firebaseConfig);
+  await Firebase.initializeApp(options: firebaseAndroid);
   runApp(const SuaDieta());
 }
 
@@ -16,7 +16,6 @@ class SuaDieta extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        "/auth": (context) => const AuthPage(),
         "/login": (context) => const LoginPage(),
         "/register": (context) => const RegisterPage(),
         "/more_about_you": (context) => const MoreAboutYouPage(),
@@ -27,7 +26,7 @@ class SuaDieta extends StatelessWidget {
         "/new_diet": (context) => const NewDietPage(),
         "/diet": (context) => const DietPage()
       },
-      initialRoute: "/auth",
+      initialRoute: "/login",
       debugShowCheckedModeBanner: false,
     );
   }

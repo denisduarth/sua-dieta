@@ -11,15 +11,12 @@ class DietModel extends StatelessWidget {
       this.dietModelImage, this.dietModelText, this.dietModelDate, this.onTap,
       {super.key});
 
-  get animationController => null;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
-        width: double.infinity,
         height: 85,
         decoration: const BoxDecoration(
           color: Colors.white,

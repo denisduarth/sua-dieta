@@ -6,17 +6,17 @@ import 'package:sua_dieta/styles/components/colors.dart';
 const labelTextStyle = {
   "white": TextStyle(
       fontFamily: 'Poppins',
-      fontWeight: FontWeight.w600,
-      fontSize: 25,
+      fontWeight: FontWeight.bold,
+      fontSize: 40,
       color: Colors.white),
   "black": TextStyle(
       fontFamily: 'Poppins',
-      fontWeight: FontWeight.w600,
-      fontSize: 25,
+      fontWeight: FontWeight.bold,
+      fontSize: 40,
       color: Colors.black),
   "dark_green": TextStyle(
       fontFamily: 'Poppins',
-      fontWeight: FontWeight.w600,
-      fontSize: 25,
+      fontWeight: FontWeight.bold,
+      fontSize: 40,
       color: hyperTextColor),
 };
