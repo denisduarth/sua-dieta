@@ -3,5 +3,5 @@
 import 'package:flutter/material.dart';
 
 const buttonColor = Color.fromRGBO(0, 226, 118, 1);
-const backgroundColor = Color(0xFFC8E1BE);
+const backgroundColor = Color.fromRGBO(200, 225, 190, 1);
 const hyperTextColor = Color.fromRGBO(66, 101, 66, 1);

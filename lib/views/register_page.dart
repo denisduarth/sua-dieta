@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, sort_child_properties_last
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
+import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -12,100 +14,90 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(200, 225, 190, 1),
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: ListView(
+      backgroundColor: backgroundColor,
+      body: RefreshIndicator(
+        color: backgroundColor,
+        backgroundColor: Colors.black,
+        onRefresh: () => Future.delayed(Duration(seconds: 3)),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TopBackgroundImageModel(),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  margin: EdgeInsets.only(top: 10),
+                  height: 500,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 30),
-                        width: 192,
-                        height: 37,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Criar",
-                                    style: labelTextStyle["black"],
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Conta",
-                                    style: labelTextStyle["white"],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Image.asset(
-                              "images/user_icon.png",
-                              width: 35,
-                              height: 35,
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            "Criar",
+                            style: labelTextStyle["black"],
+                          ),
+                          Text(
+                            " Conta",
+                            style: labelTextStyle["white"],
+                          ),
+                        ],
                       ),
-                      Container(
-                        height: 450,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TextFieldModel(
-                                "Digite seu nome",
-                                null,
-                                Icon(Icons.abc_rounded),
-                                false,
-                                TextInputType.text),
-                            TextFieldModel(
-                                "Digite seu e-mail",
-                                null,
-                                Icon(Icons.email_outlined),
-                                false,
-                                TextInputType.emailAddress),
-                            TextFieldModel(
-                                "Digite sua senha",
-                                null,
-                                Icon(Icons.lock_outline_rounded),
-                                true,
-                                TextInputType.text),
-                            TextFieldModel(
-                                "Confirme sua senha",
-                                null,
-                                Icon(Icons.lock_outline_rounded),
-                                true,
-                                TextInputType.text),
-                            ElevatedButtonModel(
-                              () => Navigator.of(context)
-                                  .pushNamed("/more_about_you"),
-                              buttonIcon: Icon(Icons.navigate_next_rounded),
-                              buttonText: "Continuar",
-                            ),
-                            Container(
-                              child: InkWell(
-                                onTap: Navigator.of(context).pop,
-                                child: Text(
-                                  "Já tem uma conta? Faça login agora!",
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
+                      TextFieldModel(
+                          "Digite seu e-mail",
+                          emailController,
+                          Icon(Icons.email_outlined),
+                          false,
+                          TextInputType.emailAddress),
+                      TextFieldModel(
+                          "Digite sua senha",
+                          passwordController,
+                          Icon(Icons.lock_outline_rounded),
+                          true,
+                          TextInputType.text),
+                      TextFieldModel(
+                          "Confirme sua senha",
+                          passwordConfirmController,
+                          Icon(Icons.lock_outline_rounded),
+                          true,
+                          TextInputType.text),
+                      ElevatedButtonModel(
+                        () {
+                          if (passwordController.text !=
+                              passwordConfirmController.text) {
+                            return ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Senhas não coincidem!"),
+                                backgroundColor: Colors.red[400],
                               ),
-                            ),
-                          ],
-                        ),
+                            );
+                          } else {
+                            FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text)
+                                .then((value) =>
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content:
+                                            Text("Usuário criado com sucesso!"),
+                                        backgroundColor: Colors.green[400],
+                                      ),
+                                    ))
+                                .then((value) =>
+                                    Navigator.pushNamed(context, "/login"));
+                          }
+                        },
+                        Icon(Icons.create),
+                        "Criar conta",
                       ),
                     ],
                   ),
@@ -113,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

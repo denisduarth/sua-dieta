@@ -24,57 +24,86 @@ class LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SingleChildScrollView(
-        child: Container(
-          height: 540,
-          padding: EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TopBackgroundImageModel(),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Sua",
-                      style: labelTextStyle['black'],
-                    ),
-                    TextSpan(
-                      text: "Dieta",
-                      style: labelTextStyle['white'],
-                    ),
-                  ],
+      body: RefreshIndicator(
+        color: backgroundColor,
+        backgroundColor: Colors.black,
+        onRefresh: () async {
+          await Future.delayed(Duration(seconds: 3));
+          emailController.clear();
+          passwordController.clear();
+        },
+        child: SingleChildScrollView(
+          child: Container(
+            height: 550,
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TopBackgroundImageModel(),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Sua",
+                        style: labelTextStyle['black'],
+                      ),
+                      TextSpan(
+                        text: "Dieta",
+                        style: labelTextStyle['white'],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              TextFieldModel(
-                'E-mail',
-                emailController,
-                Icon(Icons.email_rounded),
-                false,
-                TextInputType.emailAddress,
-              ),
-              TextFieldModel(
-                  'Senha',
-                  passwordController,
-                  Icon(Icons.password_rounded),
+                TextFieldModel(
+                  'E-mail',
+                  emailController,
+                  Icon(Icons.email_rounded),
                   false,
-                  TextInputType.visiblePassword),
-              ElevatedButtonModel(
-                () {
-                  FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text)
-                      .then((value) => Navigator.pushNamed(context, '/home'));
-                },
-                buttonIcon: Icon(Icons.login_sharp),
-                buttonText: 'Login',
-              ),
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(context, '/register'),
-                child: Text('Não tem uma conta? Crie agora!'),
-              )
-            ],
+                  TextInputType.emailAddress,
+                ),
+                TextFieldModel(
+                    'Senha',
+                    passwordController,
+                    Icon(Icons.password_rounded),
+                    true,
+                    TextInputType.visiblePassword),
+                ElevatedButtonModel(
+                  () {
+                    FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text);
+
+                    final user = FirebaseAuth.instance.currentUser;
+
+                    return (user!.displayName == null || user.photoURL == null)
+                        ? Navigator.pushNamed(context, '/more_about_you')
+                        : Navigator.pushNamed(context, '/home');
+                  },
+                  Icon(Icons.login_sharp),
+                  'Login',
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/register'),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 9,
+                          color: buttonColor,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      'Não tem uma conta? Crie agora!',
+                      style: TextStyle(
+                          fontSize: 12.5,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

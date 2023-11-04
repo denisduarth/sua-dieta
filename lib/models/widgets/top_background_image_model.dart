@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors_in_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:sua_dieta/styles/components/colors.dart';
 
 class TopBackgroundImageModel extends StatelessWidget {
   TopBackgroundImageModel({super.key});

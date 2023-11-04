@@ -25,23 +25,22 @@ class TextFieldModel extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(6)),
+        borderRadius: BorderRadius.all(Radius.circular(7)),
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
-            offset: Offset(0, 0),
-            blurRadius: 10,
+            offset: Offset(0, 5),
+            blurRadius: 5,
           ),
         ],
       ),
       child: Column(
         children: [
           TextField(
-            cursorRadius: Radius.circular(6),
+            cursorRadius: Radius.circular(7),
             keyboardType: keyboardType,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
-              // contentPadding: EdgeInsets.symmetric(horizontal: 20),
               labelText: labelText,
               labelStyle: labelStyle,
               prefixIcon: icon,

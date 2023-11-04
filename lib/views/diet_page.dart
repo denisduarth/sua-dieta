@@ -157,8 +157,8 @@ class _DietPageState extends State<DietPage> {
                             ),
                             ElevatedButtonModel(
                               () => Navigator.of(context).pushNamed("/profile"),
-                              buttonIcon: Icon(Icons.verified_rounded),
-                              buttonText: "Finalizar",
+                              Icon(Icons.verified_rounded),
+                              "Finalizar",
                             ),
                           ],
                         ),

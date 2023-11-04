@@ -1,9 +1,23 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, unnecessary_null_comparison
 
+import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
+
+dynamic pickImage(ImageSource source) async {
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? file = await imagePicker.pickImage(
+    source: source,
+  );
+
+  if (file != null) {
+    return await file.readAsBytes();
+  }
+}
 
 class MoreAboutYouPage extends StatefulWidget {
   const MoreAboutYouPage({super.key});
@@ -13,109 +27,153 @@ class MoreAboutYouPage extends StatefulWidget {
 }
 
 class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
+  Uint8List? image;
+  final user = FirebaseAuth.instance.currentUser;
+  final alturaController = TextEditingController();
+  final pesoController = TextEditingController();
+  final nomeController = TextEditingController();
+
+  Future<void> selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      image = img;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: ListView(
+      body: RefreshIndicator(
+        color: backgroundColor,
+        backgroundColor: Colors.black,
+        onRefresh: () => Future.delayed(Duration(seconds: 3)),
+        child: SingleChildScrollView(
+          child: Container(
+            height: 950,
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            margin: const EdgeInsets.symmetric(vertical: 25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TopBackgroundImageModel(),
+                Column(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Mais algumas",
+                            style: labelTextStyle['black'],
+                          ),
+                          TextSpan(
+                            text: " Informações",
+                            style: labelTextStyle['white'],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                TextFieldModel(
+                  'Seu nome',
+                  nomeController,
+                  Icon(Icons.person),
+                  false,
+                  TextInputType.name,
+                ),
+                TextFieldModel(
+                  'Sua altura',
+                  alturaController,
+                  Icon(Icons.height),
+                  false,
+                  TextInputType.number,
+                ),
+                TextFieldModel(
+                  'Seu peso',
+                  pesoController,
+                  Icon(Icons.monitor_weight),
+                  false,
+                  TextInputType.number,
+                ),
                 Container(
-                  height: 500,
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: 70,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      RichText(
+                        text: TextSpan(
                           children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Mais sobre",
-                                    style: labelTextStyle["black"],
-                                  ),
-                                  Text(
-                                    " você",
-                                    style: labelTextStyle["white"],
-                                  ),
-                                ],
+                            TextSpan(
+                              text: "Adicione uma",
+                              style: labelTextStyle['black'],
+                            ),
+                            TextSpan(
+                              text: " foto",
+                              style: labelTextStyle['white'],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Stack(
+                        children: [
+                          image != null
+                              ? CircleAvatar(
+                                  backgroundImage: MemoryImage(image!),
+                                  radius: 65,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage('images/rodrigo_goes.jpg'),
+                                  radius: 65,
+                                ),
+                          Positioned(
+                            bottom: 1,
+                            left: 80,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      offset: Offset(0, 5),
+                                      blurRadius: 5,
+                                    )
+                                  ]),
+                              child: IconButton(
+                                iconSize: 30,
+                                onPressed: () => selectImage(),
+                                icon: Icon(Icons.add_a_photo),
+                                splashRadius: 50,
+                                color: Colors.white,
+                                highlightColor: backgroundColor,
                               ),
                             ),
-                            Image.asset(
-                              "images/user_icon.png",
-                              height: 35,
-                              width: 35,
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 87),
-                        height: 120,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextFieldModel(
-                              "Sua Altura",
-                              null,
-                              Icon(Icons.height_rounded),
-                              false,
-                              TextInputType.number,
-                            ),
-                            TextFieldModel(
-                              "Seu Peso",
-                              null,
-                              Icon(Icons.monitor_weight_rounded),
-                              false,
-                              TextInputType.number,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 90,
-                        margin: EdgeInsets.only(top: 30),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Alergias",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  fontFamily: "Poppins",
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14),
-                            ),
-                            TextFieldModel(
-                              "Digite aqui suas alergias",
-                              null,
-                              Icon(Icons.no_food_rounded),
-                              false,
-                              TextInputType.text,
-                            ),
-                          ],
-                        ),
-                      ),
-                      ElevatedButtonModel(
-                        () => Navigator.of(context).pushNamed("/user_image"),
-                        buttonIcon: Icon(Icons.next_plan_rounded),
-                        buttonText: "Continuar",
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
+                ElevatedButtonModel(
+                  () {
+                    if (nomeController.text == null ||
+                        pesoController.text == null ||
+                        alturaController.text == null) {
+                      return ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Há valores nulos!"),
+                          backgroundColor: Colors.red[400],
+                        ),
+                      );
+                    }
+                  },
+                  Icon(Icons.create),
+                  'Finalizar',
+                )
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

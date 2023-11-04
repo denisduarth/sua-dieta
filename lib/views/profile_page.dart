@@ -97,9 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         ElevatedButtonModel(
                           () =>
-                              Navigator.of(context).pushNamed("/edit_account"),
-                          buttonIcon: const Icon(Icons.edit_rounded),
-                          buttonText: "Editar perfil",
+                            Navigator.of(context).pushNamed("/edit_account"),
+                            Icon(Icons.edit_rounded),
+                            "Editar perfil",
                         ),
                         Container(
                           height: 950,
@@ -124,10 +124,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               ),
                               ElevatedButtonModel(
-                                buttonIcon: Icon(Icons.add),
-                                buttonText: "Nova Dieta",
                                 () => Navigator.of(context)
                                     .pushNamed("/new_diet"),
+                                Icon(Icons.add),
+                                "Nova Dieta",
+                                
                               ),
                               Container(
                                 // height: 800,

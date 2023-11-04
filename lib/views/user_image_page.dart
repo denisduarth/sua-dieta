@@ -51,8 +51,8 @@ class _UserImagePageState extends State<UserImagePage> {
                       RoundedImageModel("images/rodrigo_goes.jpg", 200, 200),
                       ElevatedButtonModel(
                         () => Navigator.of(context).pushNamed("/login"),
-                        buttonIcon: const Icon(Icons.verified_rounded),
-                        buttonText: "Finalizar",
+                        Icon(Icons.verified_rounded),
+                        "Finalizar",
                       ),
                     ],
                   ),

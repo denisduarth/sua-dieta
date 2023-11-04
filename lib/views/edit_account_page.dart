@@ -101,8 +101,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 TextInputType.text),
                             ElevatedButtonModel(
                               () => Navigator.of(context).pushNamed("/profile"),
-                              buttonIcon: Icon(Icons.save),
-                              buttonText: "Salvar",
+                              Icon(Icons.save),
+                              "Salvar",
                             ),
                           ],
                         ),

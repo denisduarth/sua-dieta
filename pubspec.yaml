@@ -17,6 +17,7 @@ dependencies:
   firebase_core: ^2.19.0
   firebase_auth: ^4.11.1
   image_picker: ^1.0.4
+  sqlite3: ^2.1.0
 
 flutter_native_splash:
   color: "#C9E0BE"
