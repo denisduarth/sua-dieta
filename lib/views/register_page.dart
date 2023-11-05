@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, sort_child_properties_last
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, sort_child_properties_last, avoid_print
 
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -14,9 +15,19 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final supabase = Supabase.instance.client;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
+
+  Future<void> signUp() async {
+    try {
+      await supabase.auth.signUp(
+          password: passwordController.text, email: emailController.text);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Criar",
@@ -51,54 +63,54 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ],
                       ),
-                      TextFieldModel(
-                          "Digite seu e-mail",
-                          emailController,
-                          Icon(Icons.email_outlined),
-                          false,
-                          TextInputType.emailAddress),
-                      TextFieldModel(
-                          "Digite sua senha",
-                          passwordController,
-                          Icon(Icons.lock_outline_rounded),
-                          true,
-                          TextInputType.text),
+                      TextFieldModel("Digite seu e-mail", emailController,
+                          Icon(Icons.email), false, TextInputType.emailAddress),
+                      TextFieldModel("Digite sua senha", passwordController,
+                          Icon(Icons.lock), true, TextInputType.text),
                       TextFieldModel(
                           "Confirme sua senha",
                           passwordConfirmController,
-                          Icon(Icons.lock_outline_rounded),
+                          Icon(Icons.lock),
                           true,
                           TextInputType.text),
                       ElevatedButtonModel(
                         () {
-                          if (passwordController.text !=
-                              passwordConfirmController.text) {
-                            return ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Senhas não coincidem!"),
-                                backgroundColor: Colors.red[400],
-                              ),
-                            );
-                          } else {
-                            FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password: passwordController.text)
-                                .then((value) =>
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content:
-                                            Text("Usuário criado com sucesso!"),
-                                        backgroundColor: Colors.green[400],
-                                      ),
-                                    ))
-                                .then((value) =>
-                                    Navigator.pushNamed(context, "/login"));
-                          }
+                          return passwordController.text !=
+                                  passwordConfirmController.text
+                              ? ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("Senhas não coincidem!"),
+                                    backgroundColor: Colors.red[400],
+                                  ),
+                                )
+                              : signUp().then(
+                                  (value) =>
+                                      Navigator.pushNamed(context, "/login"),
+                                );
                         },
                         Icon(Icons.create),
                         "Criar conta",
                       ),
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, '/login'),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                width: 10,
+                                color: buttonColor,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            'Já tem uma conta? faça login!',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontFamily: "Poppins",
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

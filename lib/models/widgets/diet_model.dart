@@ -17,28 +17,28 @@ class DietModel extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
-        height: 85,
+        height: 75,
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
-            Radius.circular(7),
+            Radius.circular(5),
           ),
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
-              offset: Offset(0, 0),
-              blurRadius: 10,
+              offset: Offset(0, 3),
+              blurRadius: 1,
             ),
           ],
         ),
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(7)),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
               child: Image.asset(
                 dietModelImage,
                 width: 120,
-                height: 85,
+                height: 75,
                 fit: BoxFit.cover,
               ),
             ),

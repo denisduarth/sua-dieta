@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
+import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class EditAccountPage extends StatefulWidget {
   const EditAccountPage({super.key});
@@ -12,108 +14,105 @@ class EditAccountPage extends StatefulWidget {
 }
 
 class _EditAccountPageState extends State<EditAccountPage> {
+  final supabase = Supabase.instance.client;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(200, 225, 190, 1),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: ListView(
-              children: [
-                Stack(
-                  children: [
-                    TopBackgroundImageModel(),
-                    Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 120),
-                      child: RoundedImageModel(
-                        "images/rodrigo_goes.jpg",
-                        150,
-                        150,
-                      ),
+      backgroundColor: backgroundColor,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TopBackgroundImageModel(),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: Column(
+                children: [
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Edite seus",
+                          style: labelTextStyle["black"],
+                        ),
+                        Text(
+                          " dados",
+                          style: labelTextStyle["white"],
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  margin: EdgeInsets.symmetric(vertical: 30),
-                  child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Edite sua",
-                              style: labelTextStyle["black"],
-                            ),
-                            Text(
-                              " Conta ",
-                              style: labelTextStyle["white"],
-                            ),
-                            Image.asset(
-                              "images/pencil.png",
-                              width: 35,
-                              height: 35,
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 450,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TextFieldModel(
-                                "Digite o novo nome do Usuário",
-                                TextEditingController(
-                                  text: "Novo nome",
-                                ),
-                                Icon(Icons.abc_rounded),
-                                false,
-                                TextInputType.text),
-                            TextFieldModel(
-                                "Digite o novo e-mail",
-                                TextEditingController(
-                                  text: "novo_email@usuário.com",
-                                ),
-                                Icon(Icons.email_rounded),
-                                false,
-                                TextInputType.emailAddress),
-                            TextFieldModel(
-                                "Digite a nova senha",
-                                TextEditingController(
-                                  text: "dkpasokdopdskopfoasdkfopads",
-                                ),
-                                Icon(Icons.lock_outline_rounded),
-                                true,
-                                TextInputType.text),
-                            TextFieldModel(
-                                "Repita a Nova Senha",
-                                TextEditingController(
-                                  text: "dkpasokdopdskopfoasdkfopads",
-                                ),
-                                Icon(Icons.lock_outline_rounded),
-                                true,
-                                TextInputType.text),
-                            ElevatedButtonModel(
-                              () => Navigator.of(context).pushNamed("/profile"),
-                              Icon(Icons.save),
-                              "Salvar",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
-                ),
-              ],
+                  Container(
+                    height: 450,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        TextFieldModel(
+                            "Digite o novo nome do Usuário",
+                            nameController,
+                            Icon(Icons.abc_rounded),
+                            false,
+                            TextInputType.text),
+                        TextFieldModel(
+                            "Digite o novo e-mail",
+                            emailController,
+                            Icon(Icons.email_rounded),
+                            false,
+                            TextInputType.emailAddress),
+                        TextFieldModel(
+                            "Digite a nova senha",
+                            passwordController,
+                            Icon(Icons.lock),
+                            true,
+                            TextInputType.text),
+                        TextFieldModel(
+                            "Repita a Nova Senha",
+                            confirmPasswordController,
+                            Icon(Icons.lock),
+                            true,
+                            TextInputType.text),
+                        ElevatedButtonModel(
+                          () async {
+                            return passwordController.text !=
+                                    confirmPasswordController.text
+                                ? ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text("Senhas não coincidem!"),
+                                      backgroundColor: Colors.red[400],
+                                    ),
+                                  )
+                                : await supabase.auth
+                                    .updateUser(
+                                      UserAttributes(
+                                        email: emailController.text.trim(),
+                                        password:
+                                            passwordController.text.trim(),
+                                        data: {
+                                          'name': nameController.text.trim()
+                                        },
+                                      ),
+                                    )
+                                    .then((value) => Navigator.pushNamed(
+                                        context, '/profile'));
+                          },
+                          Icon(Icons.save),
+                          "Salvar",
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

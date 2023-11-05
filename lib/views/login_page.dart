@@ -1,11 +1,14 @@
 // ignore_for_file: sized_box_for_whitespace, avoid_print, prefer_const_constructors, unused_import, use_build_context_synchronously
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_core/firebase_core.dart';
+
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 import 'package:sua_dieta/views/all.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,8 +20,45 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  final supabase = Supabase.instance.client;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  late final StreamSubscription<AuthState> _authSubscription;
+
+  void signIn() async {
+    try {
+      await supabase.auth.signInWithPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+    } on AuthException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message),
+          backgroundColor: Colors.red[400],
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _authSubscription = supabase.auth.onAuthStateChange.listen((event) {
+      final session = event.session;
+      if (session != null) {
+        Navigator.pushNamed(context, '/home');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    _authSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,23 +101,29 @@ class LoginPageState extends State<LoginPage> {
                   false,
                   TextInputType.emailAddress,
                 ),
-                TextFieldModel(
-                    'Senha',
-                    passwordController,
-                    Icon(Icons.password_rounded),
-                    true,
-                    TextInputType.visiblePassword),
+                TextFieldModel('Senha', passwordController, Icon(Icons.lock),
+                    true, TextInputType.visiblePassword),
                 ElevatedButtonModel(
                   () {
-                    FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text);
+                    signIn();
+                    final user = supabase.auth.currentUser;
 
-                    final user = FirebaseAuth.instance.currentUser;
-
-                    return (user!.displayName == null || user.photoURL == null)
-                        ? Navigator.pushNamed(context, '/more_about_you')
-                        : Navigator.pushNamed(context, '/home');
+                    if (user != null) {
+                      try {
+                        return user.userMetadata?['name'] == null ||
+                                user.userMetadata?['weight'] == null ||
+                                user.userMetadata?['height'] == null
+                            ? Navigator.pushNamed(context, '/more_about_you')
+                            : Navigator.pushNamed(context, '/home');
+                      } on AuthException catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(error.message),
+                            backgroundColor: Colors.red[400],
+                          ),
+                        );
+                      }
+                    }
                   },
                   Icon(Icons.login_sharp),
                   'Login',
@@ -88,7 +134,7 @@ class LoginPageState extends State<LoginPage> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          width: 9,
+                          width: 10,
                           color: buttonColor,
                         ),
                       ),
@@ -96,12 +142,12 @@ class LoginPageState extends State<LoginPage> {
                     child: Text(
                       'Não tem uma conta? Crie agora!',
                       style: TextStyle(
-                          fontSize: 12.5,
+                          fontSize: 13,
                           fontFamily: "Poppins",
                           fontWeight: FontWeight.w600),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

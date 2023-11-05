@@ -1,12 +1,14 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, unnecessary_null_comparison, library_prefixes
 
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:typed_data';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math' as Math;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 dynamic pickImage(ImageSource source) async {
   final ImagePicker imagePicker = ImagePicker();
@@ -28,10 +30,10 @@ class MoreAboutYouPage extends StatefulWidget {
 
 class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
   Uint8List? image;
-  final user = FirebaseAuth.instance.currentUser;
-  final alturaController = TextEditingController();
-  final pesoController = TextEditingController();
-  final nomeController = TextEditingController();
+  final supabase = Supabase.instance.client;
+  final heightController = TextEditingController();
+  final weightController = TextEditingController();
+  final nameController = TextEditingController();
 
   Future<void> selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -77,21 +79,21 @@ class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
                 ),
                 TextFieldModel(
                   'Seu nome',
-                  nomeController,
+                  nameController,
                   Icon(Icons.person),
                   false,
                   TextInputType.name,
                 ),
                 TextFieldModel(
                   'Sua altura',
-                  alturaController,
+                  heightController,
                   Icon(Icons.height),
                   false,
                   TextInputType.number,
                 ),
                 TextFieldModel(
                   'Seu peso',
-                  pesoController,
+                  weightController,
                   Icon(Icons.monitor_weight),
                   false,
                   TextInputType.number,
@@ -155,17 +157,32 @@ class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
                   ),
                 ),
                 ElevatedButtonModel(
-                  () {
-                    if (nomeController.text == null ||
-                        pesoController.text == null ||
-                        alturaController.text == null) {
-                      return ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Há valores nulos!"),
-                          backgroundColor: Colors.red[400],
-                        ),
-                      );
-                    }
+                  () async {
+                    return nameController.text == null ||
+                            weightController.text == null ||
+                            heightController.text == null
+                        ? ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Há valores nulos!"),
+                              backgroundColor: Colors.red[400],
+                            ),
+                          )
+                        : await supabase.auth
+                            .updateUser(
+                              UserAttributes(
+                                data: {
+                                  'name': nameController.text,
+                                  'weight': weightController.text,
+                                  'height': heightController.text,
+                                  'BMI': double.parse(weightController.text) /
+                                      Math.pow(
+                                          double.parse(heightController.text),
+                                          2),
+                                },
+                              ),
+                            )
+                            .then((value) =>
+                                Navigator.pushNamed(context, '/home'));
                   },
                   Icon(Icons.create),
                   'Finalizar',

@@ -14,14 +14,13 @@ class ElevatedButtonModel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: buttonColor,
           shadowColor: Colors.transparent,
           padding: EdgeInsets.symmetric(
-            vertical: 10,
+            vertical: 15,
           ),
         ),
         child: Row(
@@ -35,8 +34,8 @@ class ElevatedButtonModel extends StatelessWidget {
               "$buttonText",
               style: const TextStyle(
                 fontFamily: "Poppins",
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],

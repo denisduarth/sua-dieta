@@ -25,19 +25,19 @@ class TextFieldModel extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(7)),
+        borderRadius: BorderRadius.all(Radius.circular(5)),
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
-            offset: Offset(0, 5),
-            blurRadius: 5,
+            offset: Offset(0, 3),
+            blurRadius: 1,
           ),
         ],
       ),
       child: Column(
         children: [
           TextField(
-            cursorRadius: Radius.circular(7),
+            cursorRadius: Radius.circular(5),
             keyboardType: keyboardType,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
@@ -49,6 +49,10 @@ class TextFieldModel extends StatelessWidget {
             ),
             controller: textEditingController,
             obscureText: obscureTextController,
+            style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                fontSize: 15),
           ),
         ],
       ),
