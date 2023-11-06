@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, avoid_print
 
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,31 +51,20 @@ class _HomePageState extends State<HomePage> {
                             "${user?.userMetadata?['name']}",
                             style: labelTextStyle["white"],
                           ),
-                          CircleAvatar(
-                            maxRadius: 20,
-                            backgroundColor: buttonColor,
-                            child: IconButton.filled(
-                              onPressed: () => supabase.auth.signOut().then(
-                                    (value) =>
-                                        Navigator.pushNamed(context, '/login'),
-                                  ),
-                              icon: Icon(Icons.logout),
-                              color: Colors.white,
-                              alignment: AlignmentDirectional.center,
-                              iconSize: 25,
-                            ),
+                          CircleAvatarModel(
+                            () async {
+                              if (user != null) {
+                                await supabase.auth.signOut().then((value) =>
+                                    Navigator.pushNamed(context, '/login'));
+                              }
+                            },
+                            Icon(Icons.logout),
+                            Colors.red,
                           ),
-                          CircleAvatar(
-                            maxRadius: 20,
-                            backgroundColor: buttonColor,
-                            child: IconButton.filled(
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, '/profile'),
-                              icon: Icon(Icons.account_circle),
-                              color: Colors.white,
-                              alignment: AlignmentDirectional.center,
-                              iconSize: 25,
-                            ),
+                          CircleAvatarModel(
+                            () => Navigator.pushNamed(context, '/profile'),
+                            Icon(Icons.person),
+                            buttonColor,
                           )
                         ],
                       ),

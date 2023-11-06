@@ -29,59 +29,49 @@ class _NewDietPageState extends State<NewDietPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: ListView(
+          TopBackgroundImageModel(),
+          Container(
+            height: 500,
+            margin: const EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                TopBackgroundImageModel(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Nova ",
+                            style: labelTextStyle['black'],
+                          ),
+                          TextSpan(
+                            text: "Dieta ",
+                            style: labelTextStyle['white'],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                TextFieldModel("Nome da dieta", null, const Icon(Icons.abc),
+                    false, TextInputType.text),
+                TextFieldModel(
+                  "Objetivo",
+                  null,
+                  const Icon(Icons.notes_rounded),
+                  false,
+                  TextInputType.text,
+                ),
                 Container(
-                  height: 500,
-                  margin: const EdgeInsets.symmetric(vertical: 15),
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Nova ",
-                                  style: labelTextStyle['black'],
-                                ),
-                                TextSpan(
-                                  text: "Dieta ",
-                                  style: labelTextStyle['white'],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Image.asset(
-                            'images/vegetables_icon.png',
-                            width: 50,
-                            height: 50,
-                          ),
-                        ],
+                      Text(
+                        "Filtros",
+                        style: labelTextStyle["black"],
                       ),
-                      TextFieldModel("Nome da dieta", null,
-                          const Icon(Icons.abc), false, TextInputType.text),
-                      TextFieldModel(
-                        "Objetivo",
-                        null,
-                        const Icon(Icons.notes_rounded),
-                        false,
-                        TextInputType.text,
-                      ),
-                      Container(
-                          child: Column(
-                        children: [
-                          Text(
-                            "Filtros",
-                            style: labelTextStyle["dark green"],
-                          )
-                        ],
-                      ))
                     ],
                   ),
                 ),

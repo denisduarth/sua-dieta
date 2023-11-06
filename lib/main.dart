@@ -1,17 +1,13 @@
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:sua_dieta/firebase/config_files.dart';
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/views/all.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(options: firebaseAndroid);
   await Supabase.initialize(
     anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtxd25zYWlqb2huZWZzeGJydHVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTg1MTAwNTEsImV4cCI6MjAxNDA4NjA1MX0.YO065THPxorFAgiodzh39KRBvCJn55zgto50Vw1g9K0',
-    url: 'https://kqwnsaijohnefsxbrtuf.supabase.co',
-    authFlowType: AuthFlowType.pkce
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjZWxkaHJ0YWpveXZ1aWprbXBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkxOTQ0MDIsImV4cCI6MjAxNDc3MDQwMn0.Z3aPgOVh_pws3T54vpj6O7V9sxaPrEwtknbpHB4qfV0',
+    url: 'https://tceldhrtajoyvuijkmpe.supabase.co',
   );
   runApp(const SuaDieta());
 }

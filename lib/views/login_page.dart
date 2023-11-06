@@ -25,7 +25,7 @@ class LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   late final StreamSubscription<AuthState> _authSubscription;
 
-  void signIn() async {
+  Future<void> signIn() async {
     try {
       await supabase.auth.signInWithPassword(
         email: emailController.text,
@@ -44,12 +44,14 @@ class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _authSubscription = supabase.auth.onAuthStateChange.listen((event) {
-      final session = event.session;
-      if (session != null) {
-        Navigator.pushNamed(context, '/home');
-      }
-    });
+    _authSubscription = supabase.auth.onAuthStateChange.listen(
+      (event) {
+        final session = event.session;
+        if (session != null) {
+          Navigator.pushNamed(context, '/home');
+        }
+      },
+    );
   }
 
   @override
