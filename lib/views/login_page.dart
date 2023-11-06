@@ -23,9 +23,9 @@ class LoginPageState extends State<LoginPage> {
   final supabase = Supabase.instance.client;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  late final StreamSubscription<AuthState> _authSubscription;
+  // late final StreamSubscription<AuthState> _authSubscription;
 
-  Future<void> signIn() async {
+  void signIn() async {
     try {
       await supabase.auth.signInWithPassword(
         email: emailController.text,
@@ -41,26 +41,26 @@ class LoginPageState extends State<LoginPage> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _authSubscription = supabase.auth.onAuthStateChange.listen(
-      (event) {
-        final session = event.session;
-        if (session != null) {
-          Navigator.pushNamed(context, '/home');
-        }
-      },
-    );
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _authSubscription = supabase.auth.onAuthStateChange.listen(
+  //     (event) {
+  //       final session = event.session;
+  //       if (session != null) {
+  //         Navigator.pushNamed(context, '/home');
+  //       }
+  //     },
+  //   );
+  // }
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    _authSubscription.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   emailController.dispose();
+  //   passwordController.dispose();
+  //   _authSubscription.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

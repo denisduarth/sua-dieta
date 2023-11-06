@@ -20,6 +20,7 @@ dependencies:
   sqlite3: ^2.1.0
   supabase: ^1.11.11
   supabase_flutter: ^1.10.24
+  sqflite: ^2.3.0
 
 flutter_native_splash:
   color: "#C9E0BE"
