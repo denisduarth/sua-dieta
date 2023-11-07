@@ -84,8 +84,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 )
                               : signUp().then(
-                                  (value) =>
-                                      Navigator.pushNamed(context, "/login"),
+                                  (value) async => await supabase.auth
+                                      .signInWithPassword(
+                                          password: passwordController.text,
+                                          email: emailController.text)
+                                      .then(
+                                        (value) => Navigator.pushNamed(
+                                            context, '/more_about_you'),
+                                      ),
                                 );
                         },
                         Icon(Icons.create),

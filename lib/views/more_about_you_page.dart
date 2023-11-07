@@ -31,9 +31,9 @@ class MoreAboutYouPage extends StatefulWidget {
 class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
   Uint8List? image;
   final supabase = Supabase.instance.client;
-  final heightController = TextEditingController();
   final weightController = TextEditingController();
   final nameController = TextEditingController();
+  final heightController = TextEditingController();
 
   Future<void> selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -172,8 +172,8 @@ class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
                               UserAttributes(
                                 data: {
                                   'name': nameController.text,
-                                  'weight': weightController.text,
-                                  'height': heightController.text,
+                                  'weight': double.parse(weightController.text),
+                                  'height': double.parse(heightController.text),
                                   'BMI': double.parse(weightController.text) /
                                       Math.pow(
                                           double.parse(heightController.text),
@@ -181,8 +181,10 @@ class _MoreAboutYouPageState extends State<MoreAboutYouPage> {
                                 },
                               ),
                             )
+                            .then(
+                                (value) async => await supabase.auth.signOut())
                             .then((value) =>
-                                Navigator.pushNamed(context, '/home'));
+                                Navigator.pushNamed(context, '/login'));
                   },
                   Icon(Icons.create),
                   'Finalizar',
