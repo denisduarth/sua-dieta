@@ -23,7 +23,6 @@ class LoginPageState extends State<LoginPage> {
   final supabase = Supabase.instance.client;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  // late final StreamSubscription<AuthState> _authSubscription;
 
   void signIn() async {
     try {
@@ -40,27 +39,6 @@ class LoginPageState extends State<LoginPage> {
       );
     }
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _authSubscription = supabase.auth.onAuthStateChange.listen(
-  //     (event) {
-  //       final session = event.session;
-  //       if (session != null) {
-  //         Navigator.pushNamed(context, '/home');
-  //       }
-  //     },
-  //   );
-  // }
-
-  // @override
-  // void dispose() {
-  //   emailController.dispose();
-  //   passwordController.dispose();
-  //   _authSubscription.cancel();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -107,24 +85,16 @@ class LoginPageState extends State<LoginPage> {
                     true, TextInputType.visiblePassword),
                 ElevatedButtonModel(
                   () {
-                    signIn();
-                    final user = supabase.auth.currentUser;
-
-                    if (user != null) {
-                      try {
-                        return user.userMetadata?['name'] == null ||
-                                user.userMetadata?['weight'] == null ||
-                                user.userMetadata?['height'] == null
-                            ? Navigator.pushNamed(context, '/more_about_you')
-                            : Navigator.pushNamed(context, '/home');
-                      } on AuthException catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(error.message),
-                            backgroundColor: Colors.red[400],
-                          ),
-                        );
-                      }
+                    try {
+                      signIn();
+                      Navigator.pushNamed(context, '/home');
+                    } on AuthException catch (error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(error.message),
+                          backgroundColor: Colors.red[400],
+                        ),
+                      );
                     }
                   },
                   Icon(Icons.login_sharp),

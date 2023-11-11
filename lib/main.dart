@@ -28,7 +28,6 @@ class SuaDieta extends StatelessWidget {
         "/new_diet": (context) => const NewDietPage(),
         "/diet": (context) => const DietPage(),
         "/auth": (context) => const AuthPage(),
-        "/more_about_you": (context) => const MoreAboutYouPage(),
       },
       initialRoute: "/auth",
       debugShowCheckedModeBanner: false,

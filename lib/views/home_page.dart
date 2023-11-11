@@ -15,9 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final supabase = Supabase.instance.client;
+
   @override
   Widget build(BuildContext context) {
-    final supabase = Supabase.instance.client;
     final user = supabase.auth.currentUser;
 
     return Scaffold(

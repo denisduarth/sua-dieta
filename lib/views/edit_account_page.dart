@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, sort_child_properties_last
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, sort_child_properties_last, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
@@ -19,6 +19,25 @@ class _EditAccountPageState extends State<EditAccountPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  Future<void> updateUser() async {
+    try {
+      await supabase.auth.updateUser(
+        UserAttributes(
+          email: emailController.text,
+          password: passwordController.text,
+          data: {'name': nameController.text},
+        ),
+      );
+    } on AuthException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message),
+          backgroundColor: Colors.red[400],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +98,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                             true,
                             TextInputType.text),
                         ElevatedButtonModel(
-                          () async {
+                          () {
                             return passwordController.text !=
                                     confirmPasswordController.text
                                 ? ScaffoldMessenger.of(context).showSnackBar(
@@ -88,17 +107,16 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                       backgroundColor: Colors.red[400],
                                     ),
                                   )
-                                : await supabase.auth
-                                    .updateUser(
-                                      UserAttributes(
-                                        email: emailController.text.trim(),
-                                        password:
-                                            passwordController.text.trim(),
-                                        data: {
-                                          'name': nameController.text.trim()
-                                        },
-                                      ),
-                                    )
+                                : updateUser()
+                                    .then((value) =>
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "Dados atualizados com sucesso!"),
+                                            backgroundColor: Colors.green[400],
+                                          ),
+                                        ))
                                     .then((value) => Navigator.pushNamed(
                                         context, '/profile'));
                           },
