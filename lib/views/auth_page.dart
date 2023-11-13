@@ -11,12 +11,41 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  /*
+    @override
+    Widget build(BuildContext context) {
+      return StreamBuilder<AuthState>(
+        stream: Supabase.instance.client.auth.onAuthStateChange,
+        builder: (context, snapshot) {
+          return !snapshot.hasData ? const LoginPage() : const HomePage();
+        },
+      );
+    }
+  */
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<AuthState>(
-      stream: Supabase.instance.client.auth.onAuthStateChange,
+    return FutureBuilder<AuthState>(
+      future: Supabase.instance.client.auth.onAuthStateChange.first,
       builder: (context, snapshot) {
-        return !snapshot.hasData ? const LoginPage() : const HomePage();
+        /*
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else {
+            if (snapshot.hasError) {
+              return Text('Erro: ${snapshot.error}');
+            } else {
+              return snapshot.data != null ? const HomePage() : const LoginPage();
+            }
+          }
+        */
+        return snapshot.connectionState == ConnectionState.waiting
+            ? const CircularProgressIndicator()
+            : snapshot.hasError
+                ? Text('Erro: ${snapshot.error}')
+                : !snapshot.hasData
+                    ? const LoginPage()
+                    : const HomePage();
       },
     );
   }

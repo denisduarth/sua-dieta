@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, sort_child_properties_last, avoid_print, library_prefixes, use_build_context_synchronously
 
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math' as math;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -75,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: RefreshIndicator(
         color: backgroundColor,
         backgroundColor: Colors.black,
-        onRefresh: () => Future.delayed(Duration(seconds: 3)),
+        onRefresh: () => Future.delayed(Duration(seconds: 1)),
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -241,7 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 fontWeight: FontWeight.w600),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
