@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, sort_child_properties_last, avoid_print, library_prefixes, use_build_context_synchronously
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, sort_child_properties_last, avoid_print, library_prefixes, use_build_context_synchronously, prefer_typing_uninitialized_variables
 
 import 'dart:math' as math;
 import 'dart:typed_data';
@@ -25,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final weightController = TextEditingController();
   final nameController = TextEditingController();
   final heightController = TextEditingController();
+  final genderController = TextEditingController();
 
   dynamic pickImage(ImageSource source) async {
     final ImagePicker imagePicker = ImagePicker();
@@ -49,12 +50,13 @@ class _RegisterPageState extends State<RegisterPage> {
       await supabase.auth.signUp(
         password: passwordController.text,
         email: emailController.text,
-        data: {
+        data: <String, dynamic>{
           'name': nameController.text,
           'weight': double.parse(weightController.text),
           'height': double.parse(heightController.text),
           'BMI': double.parse(weightController.text) /
               math.pow(double.parse(heightController.text), 2),
+          'sex': genderController.text
         },
       );
     } on AuthException catch (error) {
@@ -79,12 +81,12 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TopBackgroundImageModel(),
                 Container(
                   margin: EdgeInsets.only(top: 10),
-                  height: 1000,
+                  height: 1100,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -168,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         TextInputType.text,
                       ),
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             "Informações",
@@ -181,6 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ],
                       ),
                       Container(
+                        height: 200,
                         padding: EdgeInsets.symmetric(horizontal: 80),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,9 +195,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               false,
                               TextInputType.number,
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
                             TextFieldModel(
                               "Seu peso",
                               weightController,
@@ -202,22 +202,27 @@ class _RegisterPageState extends State<RegisterPage> {
                               false,
                               TextInputType.number,
                             ),
+                            TextFieldModel(
+                              "Seu sexo",
+                              genderController,
+                              Icon(Icons.male),
+                              false,
+                              TextInputType.text,
+                            ),
                           ],
                         ),
                       ),
                       ElevatedButtonModel(
-                        () {
-                          return passwordController.text !=
-                                  passwordConfirmController.text
-                              ? ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text("Senhas não coincidem!"),
-                                    backgroundColor: Colors.red[400],
-                                  ),
-                                )
-                              : signUp().then((value) =>
-                                  Navigator.pushNamed(context, '/login'));
-                        },
+                        () => passwordController.text !=
+                                passwordConfirmController.text
+                            ? ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Senhas não coincidem!"),
+                                  backgroundColor: Colors.red[400],
+                                ),
+                              )
+                            : signUp().then((value) =>
+                                Navigator.pushNamed(context, '/login')),
                         Icon(Icons.create),
                         "Criar conta",
                       ),
