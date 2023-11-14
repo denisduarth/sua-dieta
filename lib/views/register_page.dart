@@ -29,14 +29,21 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final double bmi = double.parse(weightController.text) /
-        math.pow(double.parse(heightController.text), 2);
+    final weightText = weightController.text;
+    final heightText = heightController.text;
 
-    final String categoria = bmi < 18.5
-        ? 'Abaixo do peso'
-        : bmi > 18.5 && bmi <= 29.9
-            ? 'Peso ideal'
-            : 'Obeso';
+    final weight = weightText.isNotEmpty ? double.tryParse(weightText) : null;
+    final height = heightText.isNotEmpty ? double.tryParse(heightText) : null;
+    final bmi =
+        weight != null && height != null ? weight / math.pow(height, 2) : null;
+
+    final String categoria = bmi != null
+        ? bmi < 18.5
+            ? 'Abaixo do peso'
+            : bmi > 18.5 && bmi <= 29.9
+                ? 'Peso ideal'
+                : 'Obeso'
+        : '';
 
     Future<dynamic> pickImage(ImageSource source) async {
       final ImagePicker imagePicker = ImagePicker();
