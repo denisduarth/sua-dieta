@@ -5,6 +5,8 @@ import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:intl/intl.dart' as intl;
+import 'dart:core';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -19,15 +21,14 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final user = supabase.auth.currentUser;
+    double bmiDouble = user?.userMetadata?['BMI'];
+    String bmiConverted = bmiDouble.toStringAsFixed(2);
 
     return Scaffold(
       backgroundColor: backgroundColor,
       body: WillPopScope(
         onWillPop: () async {
-          // Remove a rota da edição de perfil da pilha do navegador.
           Navigator.popUntil(context, ModalRoute.withName('/home'));
-
-          // Retorna true para permitir que o usuário volte para a tela inicial.
           return true;
         },
         child: SingleChildScrollView(
@@ -90,6 +91,23 @@ class _ProfilePageState extends State<ProfilePage> {
                               Icon(Icons.lock_rounded),
                               true,
                               TextInputType.text),
+                          TextFieldModel(
+                              "IMC",
+                              TextEditingController(text: bmiConverted),
+                              Icon(Icons.lock_rounded),
+                              false,
+                              TextInputType.text),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: switch (
+                                    user?.userMetadata?['category']) {
+                              'Abaixo do peso' || 'Obeso' => Colors.red,
+                              'Peso ideal' => Colors.green,
+                              _ => Colors.blue
+                            }),
+                            child: Text("${user?.userMetadata?['category']}"),
+                          )
                         ],
                       ),
                     ),

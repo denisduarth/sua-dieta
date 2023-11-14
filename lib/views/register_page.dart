@@ -27,50 +27,59 @@ class _RegisterPageState extends State<RegisterPage> {
   final heightController = TextEditingController();
   final genderController = TextEditingController();
 
-  dynamic pickImage(ImageSource source) async {
-    final ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(
-      source: source,
-    );
-
-    if (file != null) {
-      return await file.readAsBytes();
-    }
-  }
-
-  Future<void> selectImage() async {
-    Uint8List img = await pickImage(ImageSource.gallery);
-    setState(() {
-      image = img;
-    });
-  }
-
-  Future<void> signUp() async {
-    try {
-      await supabase.auth.signUp(
-        password: passwordController.text,
-        email: emailController.text,
-        data: <String, dynamic>{
-          'name': nameController.text,
-          'weight': double.parse(weightController.text),
-          'height': double.parse(heightController.text),
-          'BMI': double.parse(weightController.text) /
-              math.pow(double.parse(heightController.text), 2),
-          'gender': genderController.text
-        },
-      );
-    } on AuthException catch (error) {
-      throw ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.message),
-          backgroundColor: Colors.red[400],
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final double bmi = double.parse(weightController.text) /
+        math.pow(double.parse(heightController.text), 2);
+
+    final String categoria = bmi < 18.5
+        ? 'Abaixo do peso'
+        : bmi > 18.5 && bmi <= 29.9
+            ? 'Peso ideal'
+            : 'Obeso';
+
+    Future<dynamic> pickImage(ImageSource source) async {
+      final ImagePicker imagePicker = ImagePicker();
+      XFile? file = await imagePicker.pickImage(
+        source: source,
+      );
+
+      if (file != null) {
+        return await file.readAsBytes();
+      }
+    }
+
+    Future<void> selectImage() async {
+      Uint8List img = await pickImage(ImageSource.gallery);
+      setState(() {
+        image = img;
+      });
+    }
+
+    Future<void> signUp() async {
+      try {
+        await supabase.auth.signUp(
+          password: passwordController.text,
+          email: emailController.text,
+          data: <String, dynamic>{
+            'name': nameController.text,
+            'weight': double.parse(weightController.text),
+            'height': double.parse(heightController.text),
+            'BMI': bmi,
+            'gender': genderController.text,
+            'category': categoria
+          },
+        );
+      } on AuthException catch (error) {
+        throw ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(error.message),
+            backgroundColor: Colors.red[400],
+          ),
+        );
+      }
+    }
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: RefreshIndicator(
