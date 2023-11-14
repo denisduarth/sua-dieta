@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'height': double.parse(heightController.text),
           'BMI': double.parse(weightController.text) /
               math.pow(double.parse(heightController.text), 2),
-          'sex': genderController.text
+          'gender': genderController.text
         },
       );
     } on AuthException catch (error) {
