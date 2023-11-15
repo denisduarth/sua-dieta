@@ -5,7 +5,6 @@ import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:intl/intl.dart' as intl;
 import 'dart:core';
 
 class ProfilePage extends StatefulWidget {
@@ -99,6 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               TextInputType.text),
                           Container(
                             width: double.infinity,
+                            height: 20,
                             decoration: BoxDecoration(
                                 color: switch (
                                     user?.userMetadata?['category']) {
@@ -146,19 +146,19 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Column(
                               children: [
                                 DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana", "15/09/2023", () {}),
+                                    "Vegetariana", DateTime.now(), () {}),
                                 DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana2", "15/09/2023", () {}),
+                                    "Vegetariana2", DateTime.now(), () {}),
                                 DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana3", "15/09/2023", () {}),
+                                    "Vegetariana3", DateTime.now(), () {}),
                                 DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana4", "15/09/2023", () {}),
+                                    "Vegetariana4", DateTime.now(), () {}),
                                 DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana5", "15/09/2023", () {}),
+                                    "Vegetariana5", DateTime.now(), () {}),
                                 DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana6", "15/09/2023", () {}),
+                                    "Vegetariana6", DateTime.now(), () {}),
                                 DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana7", "15/09/2023", () {}),
+                                    "Vegetariana7", DateTime.now(), () {}),
                               ],
                             ),
                           ),

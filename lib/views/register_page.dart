@@ -26,16 +26,37 @@ class _RegisterPageState extends State<RegisterPage> {
   final nameController = TextEditingController();
   final heightController = TextEditingController();
   final genderController = TextEditingController();
+  final ageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final weightText = weightController.text;
     final heightText = heightController.text;
-
+    final ageText = ageController.text;
     final weight = weightText.isNotEmpty ? double.tryParse(weightText) : null;
     final height = heightText.isNotEmpty ? double.tryParse(heightText) : null;
+    final age = ageText.isNotEmpty ? double.tryParse(ageText) : null;
     final bmi =
         weight != null && height != null ? weight / math.pow(height, 2) : null;
+    final bmr = switch (genderController.text) {
+      'M' => 10 * weight! + 6.25 * height! - 5 * age! + 5,
+      'F' => 10 * weight! + 6.25 * height! - 5 * age! - 161,
+      _ => null
+    };
+    String? tipoDieta = "Emagrecer";
+    String? nivelAtividadeFisica = "Sedentário";
+    List<String> tiposDieta = ["Emagrecer", "Engordar", "Manter peso"];
+    List<String> niveisAtividadeFisica = [
+      "Sedentário",
+      "Regular",
+      "Muito ativo"
+    ];
+    final nivelAtividadeFisicaUsuario = switch (nivelAtividadeFisica) {
+      "Sedentário" => 1.2,
+      "Regular" => 1.5,
+      "Muito ativo" => 1.9,
+      _ => null
+    };
 
     final String categoria = bmi != null
         ? bmi < 18.5
@@ -70,11 +91,15 @@ class _RegisterPageState extends State<RegisterPage> {
           email: emailController.text,
           data: <String, dynamic>{
             'name': nameController.text,
-            'weight': double.parse(weightController.text),
-            'height': double.parse(heightController.text),
-            'BMI': bmi,
+            'weight': weight,
+            'height': height,
+            'age': age,
             'gender': genderController.text,
-            'category': categoria
+            'BMI': bmi,
+            'BMR': bmr,
+            'category': categoria,
+            'physical_activity_level': nivelAtividadeFisicaUsuario,
+            'max_calories': bmr! * nivelAtividadeFisicaUsuario!
           },
         );
       } on AuthException catch (error) {
@@ -102,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TopBackgroundImageModel(),
                 Container(
                   margin: EdgeInsets.only(top: 10),
-                  height: 1100,
+                  height: 1400,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -224,6 +249,61 @@ class _RegisterPageState extends State<RegisterPage> {
                               Icon(Icons.male),
                               false,
                               TextInputType.text,
+                            ),
+                            TextFieldModel(
+                              "Sua idade",
+                              ageController,
+                              Icon(Icons.numbers),
+                              false,
+                              TextInputType.text,
+                            ),
+                            DropdownButton(
+                              style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey),
+                              dropdownColor: Colors.white,
+                              focusColor: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              value: tipoDieta,
+                              onChanged: (String? newValue) {
+                                setState(
+                                  () {
+                                    tipoDieta = newValue!;
+                                  },
+                                );
+                              },
+                              items: tiposDieta.map((String value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                            DropdownButton(
+                              style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey),
+                              dropdownColor: Colors.white,
+                              focusColor: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              value: nivelAtividadeFisica,
+                              onChanged: (String? newValue) {
+                                setState(
+                                  () {
+                                    nivelAtividadeFisica = newValue!;
+                                  },
+                                );
+                              },
+                              items: niveisAtividadeFisica.map((String value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                             ),
                           ],
                         ),

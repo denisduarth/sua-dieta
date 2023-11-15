@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 
 class DietModel extends StatelessWidget {
-  final String dietModelImage, dietModelText, dietModelDate;
+  DateTime dietModelDate;
+  final String dietModelImage, dietModelText;
   final Function()? onTap;
 
-  const DietModel(
-      this.dietModelImage, this.dietModelText, this.dietModelDate, this.onTap,
-      {super.key});
+  DietModel(this.dietModelImage, this.dietModelText, this.dietModelDate, this.onTap, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,7 @@ class DietModel extends StatelessWidget {
                       fontSize: 15),
                 ),
                 Text(
-                  dietModelDate,
+                  "${dietModelDate}",
                   style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 10,
