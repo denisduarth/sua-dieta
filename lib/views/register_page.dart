@@ -59,6 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
       "Muito ativo" => 1.9,
       _ => null
     };
+    final maxCalories = bmr != null && userPhysicalActivityLevel != null ? bmr * userPhysicalActivityLevel : null;
 
     final String category = bmi != null
         ? bmi < 18.5
@@ -101,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
             'BMR': bmr,
             'category': category,
             'physical_activity_level': userPhysicalActivityLevel,
-            'max_calories': bmr! * userPhysicalActivityLevel!
+            'max_calories': maxCalories
           },
         );
       } on AuthException catch (error) {
