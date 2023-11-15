@@ -35,7 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
     final ageText = ageController.text;
     final name = nameController.text;
     final gender = genderController.text;
-
     final weight = weightText.isNotEmpty ? double.tryParse(weightText) : null;
     final height = heightText.isNotEmpty ? double.tryParse(heightText) : null;
     final age = ageText.isNotEmpty ? double.tryParse(ageText) : null;
@@ -340,7 +339,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Text(
                             'Já tem uma conta? faça login!',
                             style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 14,
                                 fontFamily: "Poppins",
                                 fontWeight: FontWeight.w600),
                           ),
