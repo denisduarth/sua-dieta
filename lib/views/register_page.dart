@@ -33,6 +33,9 @@ class _RegisterPageState extends State<RegisterPage> {
     final weightText = weightController.text;
     final heightText = heightController.text;
     final ageText = ageController.text;
+    final name = nameController.text;
+    final gender = genderController.text;
+
     final weight = weightText.isNotEmpty ? double.tryParse(weightText) : null;
     final height = heightText.isNotEmpty ? double.tryParse(heightText) : null;
     final age = ageText.isNotEmpty ? double.tryParse(ageText) : null;
@@ -43,22 +46,22 @@ class _RegisterPageState extends State<RegisterPage> {
       'F' => 10 * weight! + 6.25 * height! - 5 * age! - 161,
       _ => null
     };
-    String? tipoDieta = "Emagrecer";
-    String? nivelAtividadeFisica = "Sedentário";
-    List<String> tiposDieta = ["Emagrecer", "Engordar", "Manter peso"];
-    List<String> niveisAtividadeFisica = [
+    String? dietType = "Emagrecer";
+    String? physicalActivityLevel = "Sedentário";
+    List<String> dietTypes = ["Emagrecer", "Engordar", "Manter peso"];
+    List<String> physicalActivityLevels = [
       "Sedentário",
       "Regular",
       "Muito ativo"
     ];
-    final nivelAtividadeFisicaUsuario = switch (nivelAtividadeFisica) {
+    final userPhysicalActivityLevel = switch (physicalActivityLevel) {
       "Sedentário" => 1.2,
       "Regular" => 1.5,
       "Muito ativo" => 1.9,
       _ => null
     };
 
-    final String categoria = bmi != null
+    final String category = bmi != null
         ? bmi < 18.5
             ? 'Abaixo do peso'
             : bmi > 18.5 && bmi <= 29.9
@@ -90,16 +93,16 @@ class _RegisterPageState extends State<RegisterPage> {
           password: passwordController.text,
           email: emailController.text,
           data: <String, dynamic>{
-            'name': nameController.text,
+            'name': name,
             'weight': weight,
             'height': height,
             'age': age,
-            'gender': genderController.text,
+            'gender': gender,
             'BMI': bmi,
             'BMR': bmr,
-            'category': categoria,
-            'physical_activity_level': nivelAtividadeFisicaUsuario,
-            'max_calories': bmr! * nivelAtividadeFisicaUsuario!
+            'category': category,
+            'physical_activity_level': userPhysicalActivityLevel,
+            'max_calories': bmr! * userPhysicalActivityLevel!
           },
         );
       } on AuthException catch (error) {
@@ -266,15 +269,15 @@ class _RegisterPageState extends State<RegisterPage> {
                               dropdownColor: Colors.white,
                               focusColor: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              value: tipoDieta,
-                              onChanged: (String? newValue) {
+                              value: dietType,
+                              onChanged: (String? newDietType) {
                                 setState(
                                   () {
-                                    tipoDieta = newValue!;
+                                    dietType = newDietType!;
                                   },
                                 );
                               },
-                              items: tiposDieta.map((String value) {
+                              items: dietTypes.map((String value) {
                                 return DropdownMenuItem(
                                   value: value,
                                   child: Text(value),
@@ -290,15 +293,16 @@ class _RegisterPageState extends State<RegisterPage> {
                               dropdownColor: Colors.white,
                               focusColor: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              value: nivelAtividadeFisica,
-                              onChanged: (String? newValue) {
+                              value: physicalActivityLevel,
+                              onChanged: (String? newPhysicalActivityLevel) {
                                 setState(
                                   () {
-                                    nivelAtividadeFisica = newValue!;
+                                    physicalActivityLevel =
+                                        newPhysicalActivityLevel!;
                                   },
                                 );
                               },
-                              items: niveisAtividadeFisica.map((String value) {
+                              items: physicalActivityLevels.map((String value) {
                                 return DropdownMenuItem(
                                   value: value,
                                   child: Text(value),
