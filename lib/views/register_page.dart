@@ -9,6 +9,13 @@ import 'package:sua_dieta/styles/components/label.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
+String? physicalActivityLevel = "Sedentário";
+const List<String?> physicalActivityLevels = [
+  "Sedentário",
+  "Regular",
+  "Muito ativo"
+];
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -30,44 +37,32 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final weightText = weightController.text;
-    final heightText = heightController.text;
-    final ageText = ageController.text;
-    final name = nameController.text;
-    final gender = genderController.text;
-    final weight = weightText.isNotEmpty ? double.tryParse(weightText) : null;
-    final height = heightText.isNotEmpty ? double.tryParse(heightText) : null;
-    final age = ageText.isNotEmpty ? double.tryParse(ageText) : null;
-    final bmi =
-        weight != null && height != null ? weight / math.pow(height, 2) : null;
-    final bmr = switch (genderController.text) {
-      'M' => 10 * weight! + 6.25 * height! - 5 * age! + 5,
-      'F' => 10 * weight! + 6.25 * height! - 5 * age! - 161,
-      _ => null
-    };
-    String? dietType = "Emagrecer";
-    String? physicalActivityLevel = "Sedentário";
-    List<String> dietTypes = ["Emagrecer", "Engordar", "Manter peso"];
-    List<String> physicalActivityLevels = [
-      "Sedentário",
-      "Regular",
-      "Muito ativo"
-    ];
-    final userPhysicalActivityLevel = switch (physicalActivityLevel) {
-      "Sedentário" => 1.2,
-      "Regular" => 1.5,
-      "Muito ativo" => 1.9,
-      _ => null
-    };
-    final maxCalories = bmr != null && userPhysicalActivityLevel != null ? bmr * userPhysicalActivityLevel : null;
+    final double? bmi =
+        weightController.text.isNotEmpty && weightController.text.isNotEmpty
+            ? double.parse(weightController.text) /
+                math.pow(double.parse(heightController.text), 2)
+            : null;
 
-    final String category = bmi != null
-        ? bmi < 18.5
-            ? 'Abaixo do peso'
-            : bmi > 18.5 && bmi <= 29.9
-                ? 'Peso ideal'
-                : 'Obeso'
-        : '';
+    final double? bmr = genderController.text.isNotEmpty
+        ? genderController.text == "M"
+            ? 10 * double.parse(weightController.text) +
+                6.25 * double.parse(heightController.text) -
+                5 * double.parse(ageController.text) +
+                5
+            : 10 * double.parse(weightController.text) +
+                6.25 * double.parse(heightController.text) -
+                5 * double.parse(ageController.text) -
+                161
+        : null;
+
+    final userPhysicalActivityLevel = physicalActivityLevel == "Sedentário"
+        ? 1.2
+        : physicalActivityLevel == "Regular"
+            ? 1.5
+            : 1.9;
+
+    final double? maxCalories =
+        bmr != null ? bmr * userPhysicalActivityLevel : null;
 
     Future<dynamic> pickImage(ImageSource source) async {
       final ImagePicker imagePicker = ImagePicker();
@@ -80,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
 
-    Future<void> selectImage() async {
+    void selectImage() async {
       Uint8List img = await pickImage(ImageSource.gallery);
       setState(() {
         image = img;
@@ -93,16 +88,15 @@ class _RegisterPageState extends State<RegisterPage> {
           password: passwordController.text,
           email: emailController.text,
           data: <String, dynamic>{
-            'name': name,
-            'weight': weight,
-            'height': height,
-            'age': age,
-            'gender': gender,
+            'name': nameController.text,
+            'weight': double.parse(weightController.text),
+            'height': double.parse(heightController.text),
+            'age': double.parse(ageController.text),
+            'gender': genderController.text,
             'BMI': bmi,
             'BMR': bmr,
-            'category': category,
             'physical_activity_level': userPhysicalActivityLevel,
-            'max_calories': maxCalories
+            'max_calories': maxCalories,
           },
         );
       } on AuthException catch (error) {
@@ -130,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TopBackgroundImageModel(),
                 Container(
                   margin: EdgeInsets.only(top: 10),
-                  height: 1400,
+                  height: 1250,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -227,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ],
                       ),
                       Container(
-                        height: 200,
+                        height: 400,
                         padding: EdgeInsets.symmetric(horizontal: 80),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -269,30 +263,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               dropdownColor: Colors.white,
                               focusColor: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              value: dietType,
-                              onChanged: (String? newDietType) {
-                                setState(
-                                  () {
-                                    dietType = newDietType!;
-                                  },
-                                );
-                              },
-                              items: dietTypes.map((String value) {
-                                return DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                            DropdownButton(
-                              style: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey),
-                              dropdownColor: Colors.white,
-                              focusColor: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
                               value: physicalActivityLevel,
                               onChanged: (String? newPhysicalActivityLevel) {
                                 setState(
@@ -302,10 +272,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                   },
                                 );
                               },
-                              items: physicalActivityLevels.map((String value) {
+                              items:
+                                  physicalActivityLevels.map((String? value) {
                                 return DropdownMenuItem(
                                   value: value,
-                                  child: Text(value),
+                                  child: Text(value!),
                                 );
                               }).toList(),
                             ),

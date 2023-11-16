@@ -32,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TopBackgroundImageModel(),
               Container(
@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      height: 350,
+                      height: 730,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -90,24 +90,68 @@ class _ProfilePageState extends State<ProfilePage> {
                               Icon(Icons.lock_rounded),
                               true,
                               TextInputType.text),
-                          TextFieldModel(
-                              "IMC",
-                              TextEditingController(text: bmiConverted),
-                              Icon(Icons.lock_rounded),
-                              false,
-                              TextInputType.text),
                           Container(
-                            width: double.infinity,
-                            height: 20,
-                            decoration: BoxDecoration(
-                                color: switch (
-                                    user?.userMetadata?['category']) {
-                              'Abaixo do peso' || 'Obeso' => Colors.red,
-                              'Peso ideal' => Colors.green,
-                              _ => Colors.blue
-                            }),
-                            child: Text("${user?.userMetadata?['category']}"),
-                          )
+                            padding: EdgeInsets.symmetric(horizontal: 90),
+                            child: TextFieldModel(
+                                "Peso",
+                                TextEditingController(
+                                    text: "${user?.userMetadata?['weight']}kg"),
+                                Icon(Icons.monitor_weight),
+                                false,
+                                TextInputType.number),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 90),
+                            child: TextFieldModel(
+                                "Altura",
+                                TextEditingController(
+                                    text: "${user?.userMetadata?['height']}m"),
+                                Icon(Icons.height),
+                                false,
+                                TextInputType.number),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 90),
+                            child: TextFieldModel(
+                                "IMC",
+                                TextEditingController(text: bmiConverted),
+                                Icon(Icons.monitor_weight),
+                                false,
+                                TextInputType.number),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 60),
+                            child: TextFieldModel(
+                                "Taxa Metabólica Basal",
+                                TextEditingController(
+                                    text:
+                                        "${user?.userMetadata?['BMR'].toString()}"),
+                                Icon(Icons.monitor_weight),
+                                false,
+                                TextInputType.text),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 60),
+                            child: TextFieldModel(
+                                "Nível de atividade física",
+                                TextEditingController(
+                                    text:
+                                        "${user?.userMetadata?['physical_activity_level'].toString()}"),
+                                Icon(Icons.monitor_weight),
+                                false,
+                                TextInputType.text),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 50),
+                            child: TextFieldModel(
+                                "Calorias máximas por dia",
+                                TextEditingController(
+                                    text:
+                                        "${user?.userMetadata?['max_calories'].toString()}"),
+                                Icon(Icons.monitor_weight),
+                                false,
+                                TextInputType.text),
+                          ),
                         ],
                       ),
                     ),
@@ -141,27 +185,40 @@ class _ProfilePageState extends State<ProfilePage> {
                               )
                             ],
                           ),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 25),
-                            child: Column(
-                              children: [
-                                DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana", DateTime.now(), () {}),
-                                DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana2", DateTime.now(), () {}),
-                                DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana3", DateTime.now(), () {}),
-                                DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana4", DateTime.now(), () {}),
-                                DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana5", DateTime.now(), () {}),
-                                DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana6", DateTime.now(), () {}),
-                                DietModel("images/vegetarian_diet_image.jpg",
-                                    "Vegetariana7", DateTime.now(), () {}),
-                              ],
-                            ),
-                          ),
+                          StreamBuilder<List<Map<String, dynamic>>>(
+                            stream: supabase
+                                .from('diet')
+                                .stream(primaryKey: ['id']).order('id',
+                                    ascending: true),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData || snapshot.hasError) {
+                                return Center(
+                                  child: const CircularProgressIndicator(
+                                    color: buttonColor,
+                                  ),
+                                );
+                              }
+                              final diets = snapshot.data!;
+
+                              return ListView(
+                                shrinkWrap: true,
+                                children: diets
+                                    .map(
+                                      (diet) => Container(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(diet['id'].toString()),
+                                            Text(diet['name']),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              );
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -175,3 +232,25 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+// Container(
+//   margin: EdgeInsets.symmetric(vertical: 25),
+//   child: Column(
+//     children: [
+//       DietModel("images/vegetarian_diet_image.jpg",
+//           "Vegetariana", DateTime.now(), () {}),
+//       DietModel("images/vegetarian_diet_image.jpg",
+//           "Vegetariana2", DateTime.now(), () {}),
+//       DietModel("images/vegetarian_diet_image.jpg",
+//           "Vegetariana3", DateTime.now(), () {}),
+//       DietModel("images/vegetarian_diet_image.jpg",
+//           "Vegetariana4", DateTime.now(), () {}),
+//       DietModel("images/vegetarian_diet_image.jpg",
+//           "Vegetariana5", DateTime.now(), () {}),
+//       DietModel("images/vegetarian_diet_image.jpg",
+//           "Vegetariana6", DateTime.now(), () {}),
+//       DietModel("images/vegetarian_diet_image.jpg",
+//           "Vegetariana7", DateTime.now(), () {}),
+//     ],
+//   ),
+// ),

@@ -42,16 +42,12 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Bem-vindo,",
+                        "Bem-vindo",
                         style: labelTextStyle["black"],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(
-                            "${user?.userMetadata?['name']}",
-                            style: labelTextStyle["white"],
-                          ),
                           CircleAvatarModel(
                             () async {
                               if (user != null) {
