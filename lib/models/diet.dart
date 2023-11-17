@@ -1,5 +1,5 @@
 class Diet {
-  String? name;
+  String? name, dietType;
   List<String>? breakfast, lunch, dinner;
 
   Diet(

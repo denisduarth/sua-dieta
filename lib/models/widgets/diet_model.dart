@@ -8,7 +8,9 @@ class DietModel extends StatelessWidget {
   final String dietModelImage, dietModelText;
   final Function()? onTap;
 
-  DietModel(this.dietModelImage, this.dietModelText, this.dietModelDate, this.onTap, {super.key});
+  DietModel(
+      this.dietModelImage, this.dietModelText, this.dietModelDate, this.onTap,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class DietModel extends StatelessWidget {
                       fontSize: 15),
                 ),
                 Text(
-                  "${dietModelDate}",
+                  "$dietModelDate",
                   style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 10,

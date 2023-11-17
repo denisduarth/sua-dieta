@@ -9,7 +9,9 @@ import 'package:sua_dieta/styles/components/label.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 String? dietSelected = "Emagrecer";
+String? dietTypeSelected = "Café da manhã";
 const List<String> filters = ["Emagrecer", "Engordar", "Manter peso"];
+const List<String> dietTypes = ["Café da manhã", "Almoço", "Jantar"];
 
 class NewDietPage extends StatefulWidget {
   const NewDietPage({super.key});
@@ -27,12 +29,7 @@ class _NewDietPageState extends State<NewDietPage> {
   Widget build(BuildContext context) {
     final user = supabase.auth.currentUser;
     final double? userMaxCalories = user?.userMetadata?['max_calories'];
-
     final dietName = dietNameController.text.toString();
-    List<Diet> userDiets = (user?.userMetadata?['diets'] as List<dynamic>?)
-            ?.map((dynamic diet) => Diet.fromMap(diet))
-            .toList() ??
-        [];
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -78,7 +75,7 @@ class _NewDietPageState extends State<NewDietPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Tipo da ",
+                        "Config. da ",
                         style: labelTextStyle["black"],
                       ),
                       Text(
@@ -119,6 +116,30 @@ class _NewDietPageState extends State<NewDietPage> {
                             );
                           }).toList(),
                         ),
+                        DropdownButton(
+                          style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey),
+                          dropdownColor: Colors.white,
+                          focusColor: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          value: dietTypeSelected,
+                          onChanged: (String? newDietTypeSelected) {
+                            setState(
+                              () {
+                                dietTypeSelected = newDietTypeSelected!;
+                              },
+                            );
+                          },
+                          items: dietTypes.map((String value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
                       ],
                     ),
                   ),
@@ -126,17 +147,15 @@ class _NewDietPageState extends State<NewDietPage> {
                     () async {
                       if (userMaxCalories != null) {
                         final generatedDiet = await generator.generateDiet(
-                          userMaxCalories,
-                          dietSelected!.toString(),
-                          dietName,
-                        );
+                            userMaxCalories,
+                            dietSelected!.toString(),
+                            dietName);
                         await supabase.from('diet').insert({
                           'name': generatedDiet.name,
                           'breakfast': generatedDiet.breakfast,
                           'lunch': generatedDiet.lunch,
                           'dinner': generatedDiet.dinner,
                         });
-                        userDiets.add(generatedDiet);
                         Navigator.pushNamed(context, '/profile');
                       }
                     },

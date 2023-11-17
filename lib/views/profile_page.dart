@@ -91,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               true,
                               TextInputType.text),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 90),
+                            padding: EdgeInsets.symmetric(horizontal: 50),
                             child: TextFieldModel(
                                 "Peso",
                                 TextEditingController(
@@ -101,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 TextInputType.number),
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 90),
+                            padding: EdgeInsets.symmetric(horizontal: 50),
                             child: TextFieldModel(
                                 "Altura",
                                 TextEditingController(
@@ -111,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 TextInputType.number),
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 90),
+                            padding: EdgeInsets.symmetric(horizontal: 50),
                             child: TextFieldModel(
                                 "IMC",
                                 TextEditingController(text: bmiConverted),
@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 TextInputType.number),
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 60),
+                            padding: EdgeInsets.symmetric(horizontal: 50),
                             child: TextFieldModel(
                                 "Taxa Metabólica Basal",
                                 TextEditingController(
@@ -131,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 TextInputType.text),
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 60),
+                            padding: EdgeInsets.symmetric(horizontal: 50),
                             child: TextFieldModel(
                                 "Nível de atividade física",
                                 TextEditingController(
@@ -201,22 +201,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               final diets = snapshot.data!;
 
                               return ListView(
-                                shrinkWrap: true,
-                                children: diets
-                                    .map(
-                                      (diet) => Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(diet['id'].toString()),
-                                            Text(diet['name']),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                              );
+                                  shrinkWrap: true,
+                                  children: diets
+                                      .map((diet) => DietModel(
+                                          'images/lose_weight_diet.jpg',
+                                          diet['name'],
+                                          DateTime.now(),
+                                          () => null))
+                                      .toList());
                             },
                           )
                         ],

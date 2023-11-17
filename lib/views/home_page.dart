@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             Container(
-              height: 900,
+              height: 1200,
               margin: const EdgeInsets.symmetric(vertical: 15),
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
@@ -88,55 +88,35 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Image.asset(
                               "images/vegetables_icon.png",
-                              width: 30,
-                              height: 30,
+                              width: 50,
+                              height: 50,
                             )
                           ],
                         ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              DietModel(
-                                "images/vegetarian_diet_image.jpg",
-                                "Vegetariana",
-                                DateTime.now(),
-                                () {},
-                              ),
-                              DietModel(
-                                "images/low_carb_diet.jpg",
-                                "Low Carb",
-                                DateTime.now(),
-                                () => Navigator.of(context).pushNamed("/diet"),
-                              ),
-                              DietModel(
-                                "images/low_carb_diet.jpg",
-                                "Low Carb 2",
-                                DateTime.now(),
-                                () {},
-                              ),
-                              DietModel(
-                                "images/low_carb_diet.jpg",
-                                "Low Carb 3",
-                                DateTime.now(),
-                                () {},
-                              ),
-                              DietModel(
-                                "images/low_carb_diet.jpg",
-                                "Low Carb 4",
-                                DateTime.now(),
-                                () {},
-                              ),
-                              DietModel(
-                                "images/low_carb_diet.jpg",
-                                "Low Carb 5",
-                                DateTime.now(),
-                                () {},
-                              ),
-                            ],
-                          ),
-                        ),
+                        StreamBuilder<List<Map<String, dynamic>>>(
+                          stream: supabase.from('diet').stream(
+                              primaryKey: ['id']).order('id', ascending: true),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData || snapshot.hasError) {
+                              return Center(
+                                child: const CircularProgressIndicator(
+                                  color: buttonColor,
+                                ),
+                              );
+                            }
+                            final diets = snapshot.data!;
+
+                            return ListView(
+                                shrinkWrap: true,
+                                children: diets
+                                    .map((diet) => DietModel(
+                                        'images/lose_weight_diet.jpg',
+                                        diet['name'],
+                                        DateTime.now(),
+                                        () => null))
+                                    .toList());
+                          },
+                        )
                       ],
                     ),
                   ),

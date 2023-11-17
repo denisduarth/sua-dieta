@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:sua_dieta/models/diet.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -11,19 +13,19 @@ class DietGenerator {
     List<String> lunchList = [];
     List<String> dinnerList = [];
     final caloriesPerMeal = totalCalories / 3;
-    double? carbPercentage = switch (dietType) {
+    final double? carbPercentage = switch (dietType) {
       "Emagrecer" || "Engordar" => 0.5,
       "Manter peso" => 0.4,
       _ => null
     };
 
-    double? fatPercentage = switch (dietType) {
+    final double? fatPercentage = switch (dietType) {
       "Engordar" || "Manter peso" => 0.2,
       "Emagrecer" => 0.1,
       _ => null
     };
 
-    double? proteinPercentage = switch (dietType) {
+    final double? proteinPercentage = switch (dietType) {
       "Emagrecer" || "Manter peso" => 0.4,
       "Engordar" => 0.3,
       _ => null
@@ -39,10 +41,11 @@ class DietGenerator {
     */
     final double? carbGrams =
         carbPercentage != null ? (carbPercentage * caloriesPerMeal) / 4 : null;
-    final double? fatGrams =
-        fatPercentage != null ? (fatPercentage * caloriesPerMeal) / 9 : null;
+    final double? fatGrams = fatPercentage != null
+        ? ((fatPercentage * caloriesPerMeal) / 9) / 1000
+        : null;
     final double? proteinGrams = proteinPercentage != null
-        ? (proteinPercentage * caloriesPerMeal) / 4
+        ? ((proteinPercentage * caloriesPerMeal) / 4) / 1000
         : null;
 
     final responseBreakfast = await supabase
@@ -50,33 +53,37 @@ class DietGenerator {
         .select(
             'alimentos, energia, proteina, lipideos, carboidratos, categoria')
         .filter('energia', 'lte', caloriesPerMeal)
-        .filter('categoria', 'eq', 'C')
+        .filter('categoria', 'in', ['C'])
         .filter('carboidratos', 'lte', carbGrams)
-        .filter('lipideos', 'lte', fatGrams! / 1000)
-        .filter('proteina', 'lte', proteinGrams! / 1000)
-        .limit(4);
+        .filter('lipideos', 'lte', fatGrams)
+        .filter('proteina', 'lte', proteinGrams)
+        .limit(10);
 
     final responseLunch = await supabase
         .from('BancoTaco2')
         .select(
             'alimentos, energia, proteina, lipideos, carboidratos, categoria')
         .filter('energia', 'lte', caloriesPerMeal)
-        .filter('categoria', 'eq', 'AJ')
+        .filter('categoria', 'in', ['AJ'])
         .filter('carboidratos', 'lte', carbGrams)
-        .filter('lipideos', 'lte', fatGrams / 1000)
-        .filter('proteina', 'lte', proteinGrams / 1000)
-        .limit(4);
+        .filter('lipideos', 'lte', fatGrams)
+        .filter('proteina', 'lte', proteinGrams)
+        .limit(10);
 
     final responseDinner = await supabase
         .from('BancoTaco2')
         .select(
             'alimentos, energia, proteina, lipideos, carboidratos, categoria')
         .filter('energia', 'lte', caloriesPerMeal)
-        .filter('categoria', 'eq', 'AJ')
+        .filter('categoria', 'in', ['AJ'])
         .filter('carboidratos', 'lte', carbGrams)
-        .filter('lipideos', 'lte', fatGrams / 1000)
-        .filter('proteina', 'lte', proteinGrams / 1000)
-        .limit(4);
+        .filter('lipideos', 'lte', fatGrams)
+        .filter('proteina', 'lte', proteinGrams)
+        .limit(10);
+
+    print(responseBreakfast);
+    print(responseLunch);
+    print(responseDinner);
 
     if (responseBreakfast != null &&
         responseLunch != null &&
