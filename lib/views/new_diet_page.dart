@@ -9,9 +9,7 @@ import 'package:sua_dieta/styles/components/label.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 String? dietSelected = "Emagrecer";
-String? dietTypeSelected = "Café da manhã";
 const List<String> filters = ["Emagrecer", "Engordar", "Manter peso"];
-const List<String> dietTypes = ["Café da manhã", "Almoço", "Jantar"];
 
 class NewDietPage extends StatefulWidget {
   const NewDietPage({super.key});
@@ -71,7 +69,7 @@ class _NewDietPageState extends State<NewDietPage> {
                     false,
                     TextInputType.text,
                   ),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -110,30 +108,6 @@ class _NewDietPageState extends State<NewDietPage> {
                             );
                           },
                           items: filters.map((String value) {
-                            return DropdownMenuItem(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                        DropdownButton(
-                          style: const TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey),
-                          dropdownColor: Colors.white,
-                          focusColor: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          value: dietTypeSelected,
-                          onChanged: (String? newDietTypeSelected) {
-                            setState(
-                              () {
-                                dietTypeSelected = newDietTypeSelected!;
-                              },
-                            );
-                          },
-                          items: dietTypes.map((String value) {
                             return DropdownMenuItem(
                               value: value,
                               child: Text(value),

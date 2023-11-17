@@ -53,7 +53,7 @@ class DietGenerator {
         .select(
             'alimentos, energia, proteina, lipideos, carboidratos, categoria')
         .filter('energia', 'lte', caloriesPerMeal)
-        .filter('categoria', 'in', ['C'])
+        .filter('categoria', 'eq', 'C')
         .filter('carboidratos', 'lte', carbGrams)
         .filter('lipideos', 'lte', fatGrams)
         .filter('proteina', 'lte', proteinGrams)
@@ -64,7 +64,7 @@ class DietGenerator {
         .select(
             'alimentos, energia, proteina, lipideos, carboidratos, categoria')
         .filter('energia', 'lte', caloriesPerMeal)
-        .filter('categoria', 'in', ['AJ'])
+        .filter('categoria', 'eq', 'AJ')
         .filter('carboidratos', 'lte', carbGrams)
         .filter('lipideos', 'lte', fatGrams)
         .filter('proteina', 'lte', proteinGrams)
@@ -75,7 +75,7 @@ class DietGenerator {
         .select(
             'alimentos, energia, proteina, lipideos, carboidratos, categoria')
         .filter('energia', 'lte', caloriesPerMeal)
-        .filter('categoria', 'in', ['AJ'])
+        .filter('categoria', 'eq', 'AJ')
         .filter('carboidratos', 'lte', carbGrams)
         .filter('lipideos', 'lte', fatGrams)
         .filter('proteina', 'lte', proteinGrams)
