@@ -19,4 +19,14 @@ const labelTextStyle = {
       fontWeight: FontWeight.bold,
       fontSize: 40,
       color: hyperTextColor),
+  "black_minimal": TextStyle(
+      fontFamily: 'Poppins',
+      fontWeight: FontWeight.bold,
+      fontSize: 25,
+      color: Colors.black),
+  "white_minimal": TextStyle(
+      fontFamily: 'Poppins',
+      fontWeight: FontWeight.bold,
+      fontSize: 25,
+      color: Colors.white),
 };

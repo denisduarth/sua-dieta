@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
+import 'package:sua_dieta/views/diet_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:core';
 
@@ -204,10 +205,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                   shrinkWrap: true,
                                   children: diets
                                       .map((diet) => DietModel(
-                                          'images/lose_weight_diet.jpg',
-                                          diet['name'],
-                                          DateTime.now(),
-                                          () => null))
+                                            'images/lose_weight_diet.jpg',
+                                            diet['name'],
+                                            DateTime.now(),
+                                            () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => DietPage(
+                                                    dietId: diet['id']),
+                                              ),
+                                            ),
+                                          ))
                                       .toList());
                             },
                           )

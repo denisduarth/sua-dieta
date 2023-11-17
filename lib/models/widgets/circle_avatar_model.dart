@@ -12,14 +12,14 @@ class CircleAvatarModel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      maxRadius: 25,
+      maxRadius: 22,
       backgroundColor: color,
       child: IconButton.filled(
         onPressed: onPressed,
         icon: icon,
         color: Colors.white,
         alignment: AlignmentDirectional.center,
-        iconSize: 30,
+        iconSize: 25,
       ),
     );
   }

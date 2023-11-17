@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sua_dieta/models/widgets/all.dart';
 import 'package:sua_dieta/styles/components/colors.dart';
 import 'package:sua_dieta/styles/components/label.dart';
+import 'package:sua_dieta/views/all.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             Container(
-              height: 1200,
+              height: 1250,
               margin: const EdgeInsets.symmetric(vertical: 15),
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
@@ -42,11 +43,11 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Bem-vindo",
+                        "Bem-vindo!",
                         style: labelTextStyle["black"],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatarModel(
                             () async {
@@ -56,7 +57,10 @@ class _HomePageState extends State<HomePage> {
                               }
                             },
                             Icon(Icons.logout),
-                            Colors.red,
+                            Colors.red[300],
+                          ),
+                          SizedBox(
+                            width: 20,
                           ),
                           CircleAvatarModel(
                             () => Navigator.pushNamed(context, '/profile'),
@@ -79,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                               "Mais Recentes",
                               style: TextStyle(
                                   color: hyperTextColor,
-                                  fontSize: 17,
+                                  fontSize: 20,
                                   fontFamily: "Poppins",
                                   fontWeight: FontWeight.w600),
                             ),
@@ -88,8 +92,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Image.asset(
                               "images/vegetables_icon.png",
-                              width: 50,
-                              height: 50,
+                              width: 30,
+                              height: 30,
                             )
                           ],
                         ),
@@ -109,11 +113,20 @@ class _HomePageState extends State<HomePage> {
                             return ListView(
                                 shrinkWrap: true,
                                 children: diets
-                                    .map((diet) => DietModel(
+                                    .map(
+                                      (diet) => DietModel(
                                         'images/lose_weight_diet.jpg',
                                         diet['name'],
                                         DateTime.now(),
-                                        () => null))
+                                        () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DietPage(dietId: diet['id']),
+                                          ),
+                                        ),
+                                      ),
+                                    )
                                     .toList());
                           },
                         )
